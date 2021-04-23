@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="bfs树的遍历 题目【问题描述】给定一棵包含 N 个节点的完全二叉树，树上每个节点都有一个权值，按从上到下、从左到右的顺序依次是 A1, A2, · · · AN。现在小明要把相同深度的节点的权值加在一起，他想知道哪个深度的节点权值之和最大？如果有多个深度的权值和同为最大，请你输出其中最小的深度。 注：根的深度是 1。 【输入格式】 第一行包含一个整数 N。 第二行包含 N 个整数 A1, A2,">
+  <meta name="description" content="导论 什么是互联网？ 从应用进程的角度来说：互联网就是分布式应用进程和技术设施。  这里的基础设施向进程提供通信服务，是应用层以下的所有的协议实体。  分布式进程就是网络存在的理由。  计算机网络的层次5层结构 应用层  传输层  网络层 数据链路层  物理层 &#x2F;&#x2F;物理层之下还有媒体，属于第0层。   物理层在媒体层的基础之上接收光信号，电磁波等信号进行转义。  数据链路层是在物理层的基础之上完成">
 <meta property="og:type" content="article">
-<meta property="og:title" content="bfs树的遍历">
-<meta property="og:url" content="http://example.com/2021/04/05/bfs%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/index.html">
+<meta property="og:title" content="计网笔记-导论（持续更新）">
+<meta property="og:url" content="http://example.com/2021/04/23/%E8%AE%A1%E7%BD%91%E7%AC%94%E8%AE%B0-%E5%AF%BC%E8%AE%BA/index.html">
 <meta property="og:site_name" content="日记">
-<meta property="og:description" content="bfs树的遍历 题目【问题描述】给定一棵包含 N 个节点的完全二叉树，树上每个节点都有一个权值，按从上到下、从左到右的顺序依次是 A1, A2, · · · AN。现在小明要把相同深度的节点的权值加在一起，他想知道哪个深度的节点权值之和最大？如果有多个深度的权值和同为最大，请你输出其中最小的深度。 注：根的深度是 1。 【输入格式】 第一行包含一个整数 N。 第二行包含 N 个整数 A1, A2,">
+<meta property="og:description" content="导论 什么是互联网？ 从应用进程的角度来说：互联网就是分布式应用进程和技术设施。  这里的基础设施向进程提供通信服务，是应用层以下的所有的协议实体。  分布式进程就是网络存在的理由。  计算机网络的层次5层结构 应用层  传输层  网络层 数据链路层  物理层 &#x2F;&#x2F;物理层之下还有媒体，属于第0层。   物理层在媒体层的基础之上接收光信号，电磁波等信号进行转义。  数据链路层是在物理层的基础之上完成">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-05T08:47:09.000Z">
-<meta property="article:modified_time" content="2021-04-05T09:00:19.140Z">
+<meta property="article:published_time" content="2021-04-23T08:06:26.000Z">
+<meta property="article:modified_time" content="2021-04-23T08:34:14.144Z">
 <meta property="article:author" content="一无是处的萌新">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/04/05/bfs%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/">
+<link rel="canonical" href="http://example.com/2021/04/23/%E8%AE%A1%E7%BD%91%E7%AC%94%E8%AE%B0-%E5%AF%BC%E8%AE%BA/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>bfs树的遍历 | 日记</title>
+  <title>计网笔记-导论（持续更新） | 日记</title>
   
 
 
@@ -150,7 +150,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/05/bfs%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/23/%E8%AE%A1%E7%BD%91%E7%AC%94%E8%AE%B0-%E5%AF%BC%E8%AE%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -163,7 +163,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          bfs树的遍历
+          计网笔记-导论（持续更新）
         </h1>
 
         <div class="post-meta">
@@ -174,7 +174,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-05 16:47:09 / 修改时间：17:00:19" itemprop="dateCreated datePublished" datetime="2021-04-05T16:47:09+08:00">2021-04-05</time>
+              <time title="创建时间：2021-04-23 16:06:26 / 修改时间：16:34:14" itemprop="dateCreated datePublished" datetime="2021-04-23T16:06:26+08:00">2021-04-23</time>
             </span>
 
           
@@ -188,22 +188,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="bfs树的遍历"><a href="#bfs树的遍历" class="headerlink" title="bfs树的遍历"></a>bfs树的遍历</h1><hr>
-<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>【问题描述】<br>给定一棵包含 N 个节点的完全二叉树，树上每个节点都有一个权值，按从<br>上到下、从左到右的顺序依次是 A1, A2, · · · AN。<br>现在小明要把相同深度的节点的权值加在一起，他想知道哪个深度的节点<br>权值之和最大？如果有多个深度的权值和同为最大，请你输出其中最小的深度。</p>
-<p>注：根的深度是 1。</p>
-<p>【输入格式】</p>
-<p>第一行包含一个整数 N。</p>
-<p>第二行包含 N 个整数 A1, A2, · · · AN 。</p>
-<p>【输出格式】</p>
-<p>输出一个整数代表答案。</p>
-<p>【样例输入】</p>
-<p>7</p>
-<p>1 6 5 4 3 2 1</p>
+        <h1 id="导论"><a href="#导论" class="headerlink" title="导论"></a>导论</h1><hr>
+<h2 id="什么是互联网？"><a href="#什么是互联网？" class="headerlink" title="什么是互联网？"></a>什么是互联网？</h2><p> 从应用进程的角度来说：互联网就是分布式应用进程和技术设施。</p>
+<p> 这里的基础设施向进程提供通信服务，是应用层以下的所有的协议实体。</p>
+<p> 分布式进程就是网络存在的理由。</p>
 <hr>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;iostream&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;cmath&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;queue&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> sum2=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="keyword">int</span> j,i;</span><br><span class="line">	<span class="keyword">int</span> deep=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> deepmin=<span class="number">1</span>;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span> ( i = <span class="number">1</span>; i &lt;n; )</span><br><span class="line">	&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j&lt;<span class="built_in">pow</span>(<span class="number">2</span>,deep<span class="number">-1</span>); j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> m;</span><br><span class="line">			cin&gt;&gt;m;</span><br><span class="line">			sum+=m;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(sum2&lt;sum)&#123;</span><br><span class="line">			deepmin=deep;</span><br><span class="line">			sum2=sum;</span><br><span class="line">		&#125;</span><br><span class="line">		i+=<span class="built_in">pow</span>(<span class="number">2</span>,deep<span class="number">-1</span>);</span><br><span class="line">		sum=<span class="number">0</span>;</span><br><span class="line">		deep++;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;deepmin&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h2 id="计算机网络的层次"><a href="#计算机网络的层次" class="headerlink" title="计算机网络的层次"></a>计算机网络的层次</h2><h3 id="5层结构"><a href="#5层结构" class="headerlink" title="5层结构"></a>5层结构</h3><p> <strong>应用层</strong></p>
+<p> <strong>传输层</strong></p>
+<p> <strong>网络层</strong></p>
+<p><strong>数据链路层</strong></p>
+<p> <strong>物理层</strong></p>
+<p>//物理层之下还有媒体，属于第0层。</p>
 <hr>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>给的数据正好是bfs队列的顺序只需要一个for循环就可达到队列的效果，再在里面加一个for用于读取每一层的数据，再实时比较即可。</p>
+<p> 物理层在媒体层的基础之上接收光信号，电磁波等信号进行转义。</p>
+<p> 数据链路层是在物理层的基础之上完成点对点的传输，例如交换机与交换机之间。</p>
+<p> 网络层是在链路层的基础之上实现的端对端的传输。传输并不可靠。</p>
+<p> 传输层是在网络层的基础之上对网络层的加强和细分，从而实现了进程到进程的传输，并使传输变得可靠。</p>
+<p> 应用层是在进程到进程（传输层）的基础上完成报文的交换。</p>
+<hr>
 
     </div>
 
@@ -219,12 +221,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/04/04/bfs%E5%8A%A0%E5%9B%9E%E6%BA%AF/" rel="prev" title="bfs代码分析小结">
-      <i class="fa fa-chevron-left"></i> bfs代码分析小结
+    <a href="/2021/04/14/dfs%E9%80%92%E5%BD%92%E7%89%88%E6%9C%AC-%E8%BF%87%E6%B2%B3%E5%8D%92%E9%97%AE%E9%A2%98/" rel="prev" title="dfs递归版本-过河卒问题">
+      <i class="fa fa-chevron-left"></i> dfs递归版本-过河卒问题
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/04/06/fastsort/" rel="next" title="fastsort">
-      fastsort <i class="fa fa-chevron-right"></i>
+    <a href="/2021/04/23/%E8%AE%A1%E7%BD%91%E7%AC%94%E8%AE%B0-%E5%BA%94%E7%94%A8%E5%B1%82/" rel="next" title="计网笔记-应用层">
+      计网笔记-应用层 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -284,7 +286,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bfs%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-number">1.</span> <span class="nav-text">bfs树的遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">1.0.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.0.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.0.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BC%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">导论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%92%E8%81%94%E7%BD%91%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是互联网？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E5%B1%82%E6%AC%A1"><span class="nav-number">1.2.</span> <span class="nav-text">计算机网络的层次</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E5%B1%82%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.1.</span> <span class="nav-text">5层结构</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
