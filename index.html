@@ -145,6 +145,148 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/25/%E5%9F%BA%E4%BA%8Ec-%E5%92%8C-opencv%E7%9A%84%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一无是处的萌新">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/25/%E5%9F%BA%E4%BA%8Ec-%E5%92%8C-opencv%E7%9A%84%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B/" class="post-title-link" itemprop="url">基于c++和 opencv的人脸检测</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-25 08:51:28 / 修改时间：09:28:13" itemprop="dateCreated datePublished" datetime="2021-05-25T08:51:28+08:00">2021-05-25</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="基于c-和-opencv的人脸检测"><a href="#基于c-和-opencv的人脸检测" class="headerlink" title="基于c++和 opencv的人脸检测"></a>基于c++和 opencv的人脸检测</h1><hr>
+<h2 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h2><p>cmake，vscode，MinGW64，OpenCV。<strong>记得配置环境变量</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/uestc-mm/p/12758110.html">具体配置指南</a></p>
+<hr>
+<h2 id="配置OpenCV"><a href="#配置OpenCV" class="headerlink" title="配置OpenCV"></a>配置OpenCV</h2><p>cd 到opencv文件夹 运行 </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">mkdir mingw_build</span><br><span class="line">````</span><br><span class="line">检查目录下的文件</span><br><span class="line">mingw_build，sources,build。缺少的新建即可</span><br><span class="line">***</span><br><span class="line"><span class="comment">## 编写CMake</span></span><br><span class="line">以管理员运行CMake，</span><br><span class="line"></span><br><span class="line">sources路径填写OpenCV文件夹下的sources路径</span><br><span class="line"></span><br><span class="line">bulid路径填写OpenCV文件夹下的mingw_build路径</span><br><span class="line"></span><br><span class="line">填写完后点击Configure触发配置</span><br><span class="line"></span><br><span class="line">generator选择MinGW Makefile,并选择Specify native compilers之后点击<span class="keyword">next</span></span><br><span class="line"></span><br><span class="line">之后选择<span class="built_in">c</span>和<span class="built_in">c</span>++的编译器类型  路径例如<span class="built_in">F</span>:\TDM-GCC-<span class="number">64</span>\bin <span class="built_in">c</span>选择gcc.exe</span><br><span class="line"><span class="built_in">c</span>++选择g++.exe 之后点击Finished开始配置相关文件</span><br><span class="line"></span><br><span class="line">**注：检查Opencv源文件中的ffmpeg文件是否有文件没有手动下载添加，在编译之前，需要在MinGW64-bin文件夹中添加libmingwex-<span class="number">0.</span>dll文件**</span><br><span class="line"></span><br><span class="line">ENABLE_PRECONPILED_HEADERS        取消勾选</span><br><span class="line"> </span><br><span class="line"> BUILD_opencv_ts                 取消勾选</span><br><span class="line"> </span><br><span class="line"> WITH_CUDA                      取消勾选</span><br><span class="line"> </span><br><span class="line"> 配置完基本选项之后即可点击Generate开始生成MinGW Makefile</span><br><span class="line"> ***</span><br><span class="line"><span class="comment">## 开始编译</span></span><br><span class="line">cd到mingw_build下执行```mingw32-make```完成后执行```mingw32-make install```</span><br><span class="line">***</span><br><span class="line"><span class="comment">## vscode配置</span></span><br><span class="line">c_cpp_properties.json</span><br></pre></td></tr></table></figure>
+<p>{<br>    “configurations”: [<br>        {<br>            “name”: “Win32”,<br>            “includePath”: [<br>                “${workspaceFolder}/**”,<br>                “F:/opencv/opencv/mingw_build/install/include”<br>            ],<br>            “defines”: [<br>                “_DEBUG”,<br>                “UNICODE”,<br>                “_UNICODE”<br>            ],<br>            “windowsSdkVersion”: “10.0.18362.0”,<br>            “compilerPath”: “F://vs2019//VC//Tools//MSVC//14.28.29333//bin//Hostx64//x64//cl.exe”,<br>            “cStandard”: “c17”,<br>            “cppStandard”: “c++17”,<br>            “intelliSenseMode”: “windows-msvc-x64”<br>        }<br>    ],<br>    “version”: 4<br>}</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">launch</span>.json</span><br></pre></td></tr></table></figure>
+<p>{<br>    “version”: “0.2.0”,<br>    “configurations”: [<br>        {<br>            “name”: “(gdb) Launch”, // 配置名称，将会在启动配置的下拉菜单中显示<br>            “type”: “cppdbg”, // 配置类型，这里只能为cppdbg<br>            “request”: “launch”, // 请求配置类型，可以为launch（启动）或attach（附加）<br>            “program”: “${workspaceFolder}/${fileBasenameNoExtension}.exe”, // 将要进行调试的程序的路径<br>            “args”: [], // 程序调试时传递给程序的命令行参数，一般设为空即可<br>            “stopAtEntry”: false, // 设为true时程序将暂停在程序入口处，一般设置为false<br>            “cwd”: “${workspaceFolder}”, // 调试程序时的工作目录，一般为${workspaceRoot}即代码所在目录 workspaceRoot已被弃用，现改为workspaceFolder<br>            “environment”: [],<br>            “externalConsole”: true, // 调试时是否显示控制台窗口，一般设置为true显示控制台<br>            “MIMode”: “gdb”,<br>            “miDebuggerPath”: “F:/TDM-GCC-64/bin/gdb.exe”, // miDebugger的路径，注意这里要与MinGw的路径对应<br>            “preLaunchTask”: “g++”, // 调试会话开始前执行的任务，一般为编译程序，c++为g++, c为gcc<br>            “setupCommands”: [<br>                {<br>                    “description”: “Enable pretty-printing for gdb”,<br>                    “text”: “-enable-pretty-printing”,<br>                    “ignoreFailures”: true<br>                }<br>            ]<br>        }<br>    ]<br>}</p>
+<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable"><span class="class">tasks</span>.json</span></span><br></pre></td></tr></table></figure>
+<p>{<br>    “version”: “2.0.0”,<br>    “command”: “g++”,<br>    “args”: [<br>        “-g”,<br>        “${file}”,<br>        “-o”,<br>        “${fileBasenameNoExtension}.exe”,<br>        “-IF:/opencv/opencv/mingw_build/install/include”,<br>        “-IF:/opencv/opencv/mingw_build/install/include/opencv2”,<br>        “-LF:/opencv/opencv/mingw_build/install/x64/mingw/bin”,<br>        “-LF:/opencv/opencv/mingw_build/install/x64/mingw/lib”,<br>        “-llibopencv_calib3d420”,<br>        “-llibopencv_core420”,<br>        “-llibopencv_dnn420”,<br>        “-llibopencv_features2d420”,<br>        “-llibopencv_flann420”,<br>        “-llibopencv_highgui420”,<br>        “-llibopencv_imgcodecs420”,<br>        “-llibopencv_imgproc420”,<br>        “-llibopencv_ml420”,<br>        “-llibopencv_objdetect420”,<br>        “-llibopencv_photo420”,<br>        “-llibopencv_stitching420”,<br>        “-llibopencv_video420”,<br>        “-llibopencv_videoio420”,<br>    ],<br>    “problemMatcher”: {<br>        “owner”: “cpp”,<br>        “fileLocation”: [<br>            “relative”,<br>            “${workspaceFolder}”<br>        ],<br>        “pattern”: {<br>            “regexp”: “^(.<em>):(\d+):(\d+):\s+(warning|error):\s+(.</em>)$”,<br>            “file”: 1,<br>            “line”: 2,<br>            “column”: 3,<br>            “severity”: 4,<br>            “message”: 5<br>        }<br>    },<br>    “group”: {<br>        “kind”: “build”,<br>        “isDefault”: true<br>    }<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">测试代码</span><br></pre></td></tr></table></figure>
+<p>#include &lt;stdio.h&gt;<br>#include <iostream><br>#include &lt;stdlib.h&gt;<br>#include&lt;opencv2\core\core.hpp&gt;<br>#include&lt;opencv2\opencv.hpp&gt;<br>#include&lt;opencv2\highgui.hpp&gt;<br>#include&lt;opencv2/objdetect/objdetect.hpp&gt;<br>#include &lt;opencv2\imgproc\types_c.h&gt;</p>
+<p>using namespace std;<br>using namespace cv;</p>
+<p>string xmlPath=”C:\Users\12238\Desktop\opencv\haarcascade_frontalface_default.xml”;//xml在F:\opencv\opencv\sources\data\haarcascades里复制或直接引用</p>
+<p>int main(void)<br>{<br>    cv::Mat a = cv::imread(“he.jpg”);<br>    CascadeClassifier ccf;      //创建脸部对象<br>    ccf.load(xmlPath);           //导入opencv自带检测的文件<br>    vector<Rect> faces;<br>    Mat gray;<br>    cvtColor(a,gray,CV_BGR2GRAY);<br>    equalizeHist(gray,gray);<br>    ccf.detectMultiScale(gray,faces,1.06,10);<br>    cout&lt;&lt;”123453”&lt;&lt;endl;<br>    for(vector<Rect>::const_iterator iter=faces.begin();iter!=faces.end();iter++)<br>    {<br>        rectangle(a,*iter,Scalar(0,0,255),2,8); //画出脸部矩形<br>    }<br>    cv::imshow(“hello”,a);<br>    cv::waitKey(0);<br>    return 0;<br>}<br>```</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/08/ACM%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一无是处的萌新">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/08/ACM%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">ACM笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-08 15:14:17 / 修改时间：15:25:13" itemprop="dateCreated datePublished" datetime="2021-05-08T15:14:17+08:00">2021-05-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="点与直线"><a href="#点与直线" class="headerlink" title="点与直线"></a>点与直线</h1><hr>
+<h3 id="点积与叉积"><a href="#点积与叉积" class="headerlink" title="点积与叉积"></a>点积与叉积</h3><p>O （x0，y0） A（x1,x2) B(y1,y2)</p>
+<p>xa=x1-x0;</p>
+<p>ya=y1-y0;</p>
+<p>xb=x2-x0;</p>
+<p>yb=y2-y0;</p>
+<p>OA与OB的点积<br>xa<em>xb+ya</em>yb</p>
+<p><strong>点积为零时向量垂直。</strong></p>
+<p>OA与OB的叉积为<br>xa<em>xb-ya</em>yb;</p>
+<p><strong>叉积为0时O A B 共线。</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/25/%E8%AE%A1%E7%BD%91%E7%AC%94%E8%AE%B0-%E8%BF%90%E8%BE%93%E5%B1%82/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -703,142 +845,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/07/%E9%93%BE%E8%A1%A8C%E8%AF%AD%E8%A8%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="一无是处的萌新">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="日记">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/07/%E9%93%BE%E8%A1%A8C%E8%AF%AD%E8%A8%80/" class="post-title-link" itemprop="url">链表C语言</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-07 07:38:51" itemprop="dateCreated datePublished" datetime="2021-04-07T07:38:51+08:00">2021-04-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-09 10:45:06" itemprop="dateModified" datetime="2021-04-09T10:45:06+08:00">2021-04-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="链表C语言版本（简陋版3-0）"><a href="#链表C语言版本（简陋版3-0）" class="headerlink" title="链表C语言版本（简陋版3.0）"></a>链表C语言版本（简陋版3.0）</h1><hr>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">a</span> &#123;</span><span class="comment">//链表的节点</span></span><br><span class="line">	<span class="keyword">char</span> ch[<span class="number">3</span>];<span class="comment">//链表节点的数据</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">a</span>* <span class="title">next</span>;</span><span class="comment">//next指针</span></span><br><span class="line">&#125;zi;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">est</span><span class="params">(zi *p,<span class="keyword">char</span> *c)</span> </span>&#123;<span class="comment">//生成链表</span></span><br><span class="line">	zi* a = (zi*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(zi));<span class="comment">//动态申请空间</span></span><br><span class="line">	p-&gt;next = a;<span class="comment">//让结尾节点指向新生成的节点</span></span><br><span class="line">	p = p-&gt;next;<span class="comment">//让p指向下一个也就是新生成的节点</span></span><br><span class="line">	p-&gt;next = <span class="literal">NULL</span>;<span class="comment">//让最后一个节点指向空</span></span><br><span class="line">	<span class="built_in">strcpy</span>(p-&gt;ch, c);<span class="comment">//把数据储存进新节点中</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dele</span><span class="params">(zi* head)</span> </span>&#123;<span class="comment">//清空链表函数</span></span><br><span class="line">	zi* p = head-&gt;next;<span class="comment">//让p指向head的下一位（head不是分配的动态内存是局部变量不用free）</span></span><br><span class="line">	zi* a;<span class="comment">//第二个指针</span></span><br><span class="line">	<span class="keyword">while</span> (p-&gt;next)<span class="comment">//循环直到p-&gt;next为null结束</span></span><br><span class="line">	&#123;   </span><br><span class="line">		a = p;<span class="comment">//备份p用来free</span></span><br><span class="line">		p = p-&gt;next;<span class="comment">//让p指向下一位</span></span><br><span class="line">		<span class="built_in">free</span>(a);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(zi *head, <span class="keyword">char</span>* c)</span> </span>&#123;<span class="comment">//查找函数</span></span><br><span class="line">	<span class="keyword">int</span> sum=<span class="number">0</span>;<span class="comment">//定位位置</span></span><br><span class="line">	<span class="keyword">int</span> flag = <span class="number">0</span>;<span class="comment">//是否查找到的标记</span></span><br><span class="line">	zi* q = head;</span><br><span class="line">	<span class="keyword">while</span>(q-&gt;next)&#123;</span><br><span class="line">		sum++;</span><br><span class="line">		q = q-&gt;next;<span class="comment">//让q指向下一位</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">strcmp</span>(q-&gt;ch, c) == <span class="number">0</span>) &#123;<span class="comment">//判断是否是查找的选项</span></span><br><span class="line">			flag = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (flag == <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> sum;<span class="comment">//找到了返回位置</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;<span class="comment">//没找到返回-1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">in</span><span class="params">(zi* head, <span class="keyword">char</span>* c, <span class="keyword">int</span> z)</span> </span>&#123;<span class="comment">//添加函数</span></span><br><span class="line">	zi* front=head;<span class="comment">//front之后会指向z前一个节点</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; z<span class="number">-1</span>; i++)<span class="comment">//循环到z前</span></span><br><span class="line">	&#123;</span><br><span class="line">		front = front-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	zi* back=front-&gt;next;<span class="comment">//备份front后一个节点，新节点会插入2者之间</span></span><br><span class="line">	est(front, c);<span class="comment">//调用新建函数新建指针</span></span><br><span class="line">	front-&gt;next-&gt;next = back;<span class="comment">//front-&gt;next就是新节点，让其接上back节点</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">out</span><span class="params">(zi* head, <span class="keyword">char</span>* c)</span> </span>&#123;<span class="comment">//删除节点</span></span><br><span class="line">	<span class="keyword">int</span> z = find(head, c);<span class="comment">//找到删除数据的位置</span></span><br><span class="line">	<span class="keyword">if</span> (z == <span class="number">-1</span>) &#123;<span class="comment">//-1代表未找到</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;未找到匹配字符!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		zi* front = head;<span class="comment">//备份前一个和后后一个，删除二者之间的节点</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; z<span class="number">-1</span>; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			front = front-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		zi* m = front-&gt;next;<span class="comment">//m是要删除的节点</span></span><br><span class="line">		zi* back = m-&gt;next;<span class="comment">//删除节点后的节点</span></span><br><span class="line">		front-&gt;next = back;<span class="comment">//重新连接节点</span></span><br><span class="line">		<span class="built_in">free</span>(m);<span class="comment">//释放m</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pri</span><span class="params">(zi* head)</span> </span>&#123;<span class="comment">//打印函数</span></span><br><span class="line">	zi *p = head;</span><br><span class="line">	<span class="keyword">while</span> (p-&gt;next) &#123;</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, p-&gt;ch);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;<span class="comment">//主函数简单备注不用了</span></span><br><span class="line">	<span class="keyword">int</span> z;</span><br><span class="line">	<span class="keyword">char</span> ch[<span class="number">3</span>];</span><br><span class="line">	<span class="keyword">char</span> c[<span class="number">3</span>];</span><br><span class="line">	zi head = &#123; &#123;<span class="string">&#x27;s&#x27;</span>&#125;,<span class="literal">NULL</span> &#125;;</span><br><span class="line">	zi* p = &amp;head;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;请输入8个字（每个词之间空一格，E表示结束）\n&quot;</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, c);</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">strcmp</span>(<span class="string">&quot;E&quot;</span>,c)!=<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		</span><br><span class="line">		est(p, c);</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, c);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;1、查找     2、删除\n&quot;</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;3、添加     4、输出\n&quot;</span>);</span><br><span class="line">	getchar();</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">switch</span> (n) &#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">		getchar();</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;输入查找的汉字\n&quot;</span>);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, ch);</span><br><span class="line">		<span class="keyword">if</span> (find(&amp;head, ch) == <span class="number">-1</span>)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;输入的汉字未查找到\n&quot;</span>);</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;输入的汉字在第%d位&quot;</span>, find(&amp;head, ch));</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">		getchar();</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;输入需要删除的汉字\n&quot;</span>);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, ch);</span><br><span class="line">		out(&amp;head, ch);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;删除后的结果\n&quot;</span>);</span><br><span class="line">		pri(&amp;head);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">		getchar();</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;输入需要添加的汉字\n&quot;</span>);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, ch);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;输入需要添加的位次\n&quot;</span>);</span><br><span class="line">		getchar();</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;z);</span><br><span class="line">		in(&amp;head, ch, z);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;插入后的结果为\n&quot;</span>);</span><br><span class="line">		pri(&amp;head);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">		pri(&amp;head);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;输入错误\n&quot;</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	dele(&amp;head);<span class="comment">//删除除了head以外的所有节点</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><code>void est(zi *p,char *c)</code>函数实现了链表的创建。第一个参数表示最后一个节点的指针，第二个参数是需要存入的数据。</p>
-<p><code>void dele(zi* head)</code>函数实现了链表的清空，参数为头结点。</p>
-<p><code>int find(zi *head, char* c)</code>函数实现了链表的查找，第一个参数，是头结点，第二参数是需要查找的值。同理此函数可以拓展改写为查第n个元素的值。</p>
-<p><code>void in(zi* head, char* c, int z)</code>函数实现了链表的插入，第一个参数是头结点，第二个参数是需要插入结点数据的值，第三个参数是插入到第几个元素之后的位次。</p>
-<p><code>void out(zi* head, char* c)</code>函数实现了链表的删除，第一个参数是头结点，第二个参数是删除的数据是什么。此函数可以改写拓展为删除第n个元素。</p>
-<p><code>void pri(zi* head)</code>函数实现了打印整个链表。第一个参数为头结点。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/06/fastsort/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="一无是处的萌新">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="日记">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/06/fastsort/" class="post-title-link" itemprop="url">fastsort</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-04-06 10:11:03 / 修改时间：10:19:28" itemprop="dateCreated datePublished" datetime="2021-04-06T10:11:03+08:00">2021-04-06</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="快速排序（递归）"><a href="#快速排序（递归）" class="headerlink" title="快速排序（递归）"></a>快速排序（递归）</h1><hr>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;iostream&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;cmath&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;queue&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>]=&#123;<span class="number">1</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">9</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">change</span><span class="params">(<span class="keyword">int</span> ,<span class="keyword">int</span> )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span> left,<span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(left&lt;right)&#123;</span><br><span class="line">			<span class="keyword">int</span> q=<span class="built_in">change</span>(left,right);</span><br><span class="line">			<span class="built_in">sort</span>(left,q<span class="number">-1</span>);</span><br><span class="line">			<span class="built_in">sort</span>(q+<span class="number">1</span>,right);</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">change</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">      <span class="keyword">int</span> temp=a[left];</span><br><span class="line">	  <span class="keyword">while</span>(left&lt;right)&#123;</span><br><span class="line">	  <span class="keyword">while</span>(a[right]&gt;=temp&amp;&amp;left&lt;right) right--;</span><br><span class="line">	  a[left]=a[right];</span><br><span class="line">	  <span class="keyword">while</span>(a[left]&lt;=temp&amp;&amp;left&lt;right) left++;</span><br><span class="line">	  a[right]=a[left];</span><br><span class="line">	  &#125;</span><br><span class="line">       a[left]=temp;</span><br><span class="line">	   <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">sort</span>(<span class="number">0</span>,<span class="number">9</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		cout&lt;&lt;a[i]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>sort函数是用来进行分割和递归，change函数是用来执行比较和交换，并返回移动后的left。保证left右边所有数据比他小，左边所有数据比他大。<code>int q=change(left,right);</code>这个语句就是用来分割数组，将左右范围值带入，得到一个最左边元素所应该在的位置的下标。再在此下标的基础上分别进行他左边和右边范围的递归。</p>
-<p>sort语句的递归的进口是左下标小于右下标，出口就是左下标大于等于右下标。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -908,7 +914,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
