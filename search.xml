@@ -19,21 +19,6 @@
       </categories>
   </entry>
   <entry>
-    <title>TCP协议</title>
-    <url>/2021/06/01/TCP%E5%8D%8F%E8%AE%AE/</url>
-    <content><![CDATA[<h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h1><hr>
-<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>http是一种超文本传输协议。</p>
-<p>客户端：web浏览器实现了http的客户端。<br>服务器（web服务器）：存储了能通过URL寻址来查找的web对象。</p>
-<p>web界面的构成：由一个HTML的基本文件（也是对象）+其中的多条URL构成（可寻址成对象例如图片等）。</p>
-<p><a href="http://www.github.com/xxx/xxx">http://www.github.com/xxx/xxx</a></p>
-<p><a href="http://www.github.com为主机名/">www.github.com为主机名</a></p>
-<p>/xxx/xxx为路径名</p>
-]]></content>
-      <categories>
-        <category>计算机网络</category>
-      </categories>
-  </entry>
-  <entry>
     <title>crawler</title>
     <url>/2021/08/14/crawler/</url>
     <content><![CDATA[<h1 id="爬虫"><a href="#爬虫" class="headerlink" title="爬虫"></a>爬虫</h1><h2 id="requests模块"><a href="#requests模块" class="headerlink" title="requests模块"></a>requests模块</h2><hr>
@@ -73,17 +58,18 @@
       </categories>
   </entry>
   <entry>
-    <title>dfs递归版本-过河卒问题</title>
-    <url>/2021/04/14/dfs%E9%80%92%E5%BD%92%E7%89%88%E6%9C%AC-%E8%BF%87%E6%B2%B3%E5%8D%92%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="dfs递归版本-过河卒问题"><a href="#dfs递归版本-过河卒问题" class="headerlink" title="dfs递归版本-过河卒问题"></a>dfs递归版本-过河卒问题</h1><hr>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;iostream&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;cmath&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">spot</span>&#123;</span></span><br><span class="line">   <span class="keyword">int</span> x;</span><br><span class="line">   <span class="keyword">int</span> y;</span><br><span class="line">&#125;;<span class="comment">//点坐标结构</span></span><br><span class="line"></span><br><span class="line">spot a[<span class="number">2</span>]=&#123;&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">1</span>&#125;&#125;;<span class="comment">//偏移数组记录方向方便for循环</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> map[<span class="number">20</span>][<span class="number">20</span>]=&#123;<span class="number">0</span>&#125;;<span class="comment">//迷宫</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> sum=<span class="number">0</span>;<span class="comment">//记录路线数量</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(spot temp)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++)</span><br><span class="line">         &#123;</span><br><span class="line">             <span class="keyword">if</span>(map[temp.y+a[i].y][temp.x+a[i].x]==<span class="number">1</span>||map[temp.y+a[i].y][temp.x+a[i].x]==<span class="number">2</span>)</span><br><span class="line">             &#123;<span class="keyword">if</span>(map[temp.y+a[i].y][temp.x+a[i].x]==<span class="number">2</span>)</span><br><span class="line">             sum++;</span><br><span class="line">             <span class="keyword">continue</span>;&#125;</span><br><span class="line">             <span class="built_in">dfs</span>(&#123;temp.x+a[i].x,temp.y+a[i].y&#125;);</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,m;<span class="comment">//记录迷宫大小</span></span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">     spot horse;</span><br><span class="line">     cin&gt;&gt;horse.x&gt;&gt;horse.y;</span><br><span class="line">     map[n][m]=<span class="number">2</span>;</span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m+<span class="number">1</span>;i++)</span><br><span class="line">     map[n+<span class="number">1</span>][i]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n+<span class="number">1</span>;i++)</span><br><span class="line">     map[i][m+<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">     map[horse.x][horse.y]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x+<span class="number">1</span>&lt;=<span class="number">100</span>&amp;&amp;horse.y<span class="number">-2</span>&gt;=<span class="number">0</span>)</span><br><span class="line">     map[horse.x+<span class="number">1</span>][horse.y<span class="number">-2</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x+<span class="number">2</span>&lt;=<span class="number">100</span>&amp;&amp;horse.y<span class="number">-1</span>&gt;=<span class="number">0</span>)</span><br><span class="line">     map[horse.x+<span class="number">2</span>][horse.y<span class="number">-1</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x+<span class="number">2</span>&lt;=<span class="number">100</span>&amp;&amp;horse.y+<span class="number">1</span>&lt;=<span class="number">100</span>)</span><br><span class="line">     map[horse.x+<span class="number">2</span>][horse.y+<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x+<span class="number">1</span>&lt;=<span class="number">100</span>&amp;&amp;horse.y+<span class="number">2</span>&lt;=<span class="number">100</span>)</span><br><span class="line">     map[horse.x+<span class="number">1</span>][horse.y+<span class="number">2</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x<span class="number">-1</span>&gt;=<span class="number">0</span>&amp;&amp;horse.y+<span class="number">2</span>&lt;=<span class="number">100</span>)</span><br><span class="line">     map[horse.x<span class="number">-1</span>][horse.y+<span class="number">2</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x<span class="number">-2</span>&gt;=<span class="number">0</span>&amp;&amp;horse.y+<span class="number">1</span>&lt;=<span class="number">100</span>)</span><br><span class="line">     map[horse.x<span class="number">-2</span>][horse.y+<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x<span class="number">-2</span>&gt;=<span class="number">0</span>&amp;&amp;horse.y<span class="number">-1</span>&gt;=<span class="number">0</span>)</span><br><span class="line">     map[horse.x<span class="number">-2</span>][horse.y<span class="number">-1</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x<span class="number">-1</span>&gt;=<span class="number">0</span>&amp;&amp;horse.y<span class="number">-2</span>&gt;=<span class="number">0</span>)</span><br><span class="line">     map[horse.x<span class="number">-1</span>][horse.y<span class="number">-2</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="comment">//初始化</span></span><br><span class="line">     </span><br><span class="line">     <span class="built_in">dfs</span>(&#123;<span class="number">0</span>,<span class="number">0</span>&#125;);</span><br><span class="line">     </span><br><span class="line">     cout&lt;&lt;sum&lt;&lt;endl;</span><br><span class="line">     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
-<p>主体为dfs函数</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(spot temp)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++)</span><br><span class="line">         &#123;</span><br><span class="line">             <span class="keyword">if</span>(map[temp.y+a[i].y][temp.x+a[i].x]==<span class="number">1</span>||map[temp.y+a[i].y][temp.x+a[i].x]==<span class="number">2</span>)</span><br><span class="line">             &#123;<span class="keyword">if</span>(map[temp.y+a[i].y][temp.x+a[i].x]==<span class="number">2</span>)</span><br><span class="line">             sum++;</span><br><span class="line">             <span class="keyword">continue</span>;&#125;</span><br><span class="line">             <span class="built_in">dfs</span>(&#123;temp.x+a[i].x,temp.y+a[i].y&#125;);</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>函数形参就是当前的点，<br>之后for遍历所有方向。<br>不同点在<code> dfs(&#123;temp.x+a[i].x,temp.y+a[i].y&#125;);</code>一旦遇到合法的点就进去，而遍历完所有可能方向就会结束函数。</p>
+    <title>TCP协议</title>
+    <url>/2021/06/01/TCP%E5%8D%8F%E8%AE%AE/</url>
+    <content><![CDATA[<h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h1><hr>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>http是一种超文本传输协议。</p>
+<p>客户端：web浏览器实现了http的客户端。<br>服务器（web服务器）：存储了能通过URL寻址来查找的web对象。</p>
+<p>web界面的构成：由一个HTML的基本文件（也是对象）+其中的多条URL构成（可寻址成对象例如图片等）。</p>
+<p><a href="http://www.github.com/xxx/xxx">http://www.github.com/xxx/xxx</a></p>
+<p><a href="http://www.github.com为主机名/">www.github.com为主机名</a></p>
+<p>/xxx/xxx为路径名</p>
 ]]></content>
       <categories>
-        <category>算法</category>
+        <category>计算机网络</category>
       </categories>
   </entry>
   <entry>
@@ -105,6 +91,20 @@
 
 <hr>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>给的数据正好是bfs队列的顺序只需要一个for循环就可达到队列的效果，再在里面加一个for用于读取每一层的数据，再实时比较即可。</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>dfs递归版本-过河卒问题</title>
+    <url>/2021/04/14/dfs%E9%80%92%E5%BD%92%E7%89%88%E6%9C%AC-%E8%BF%87%E6%B2%B3%E5%8D%92%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="dfs递归版本-过河卒问题"><a href="#dfs递归版本-过河卒问题" class="headerlink" title="dfs递归版本-过河卒问题"></a>dfs递归版本-过河卒问题</h1><hr>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;iostream&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;cmath&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">spot</span>&#123;</span></span><br><span class="line">   <span class="keyword">int</span> x;</span><br><span class="line">   <span class="keyword">int</span> y;</span><br><span class="line">&#125;;<span class="comment">//点坐标结构</span></span><br><span class="line"></span><br><span class="line">spot a[<span class="number">2</span>]=&#123;&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">1</span>&#125;&#125;;<span class="comment">//偏移数组记录方向方便for循环</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> map[<span class="number">20</span>][<span class="number">20</span>]=&#123;<span class="number">0</span>&#125;;<span class="comment">//迷宫</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> sum=<span class="number">0</span>;<span class="comment">//记录路线数量</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(spot temp)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++)</span><br><span class="line">         &#123;</span><br><span class="line">             <span class="keyword">if</span>(map[temp.y+a[i].y][temp.x+a[i].x]==<span class="number">1</span>||map[temp.y+a[i].y][temp.x+a[i].x]==<span class="number">2</span>)</span><br><span class="line">             &#123;<span class="keyword">if</span>(map[temp.y+a[i].y][temp.x+a[i].x]==<span class="number">2</span>)</span><br><span class="line">             sum++;</span><br><span class="line">             <span class="keyword">continue</span>;&#125;</span><br><span class="line">             <span class="built_in">dfs</span>(&#123;temp.x+a[i].x,temp.y+a[i].y&#125;);</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,m;<span class="comment">//记录迷宫大小</span></span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">     spot horse;</span><br><span class="line">     cin&gt;&gt;horse.x&gt;&gt;horse.y;</span><br><span class="line">     map[n][m]=<span class="number">2</span>;</span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m+<span class="number">1</span>;i++)</span><br><span class="line">     map[n+<span class="number">1</span>][i]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n+<span class="number">1</span>;i++)</span><br><span class="line">     map[i][m+<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">     map[horse.x][horse.y]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x+<span class="number">1</span>&lt;=<span class="number">100</span>&amp;&amp;horse.y<span class="number">-2</span>&gt;=<span class="number">0</span>)</span><br><span class="line">     map[horse.x+<span class="number">1</span>][horse.y<span class="number">-2</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x+<span class="number">2</span>&lt;=<span class="number">100</span>&amp;&amp;horse.y<span class="number">-1</span>&gt;=<span class="number">0</span>)</span><br><span class="line">     map[horse.x+<span class="number">2</span>][horse.y<span class="number">-1</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x+<span class="number">2</span>&lt;=<span class="number">100</span>&amp;&amp;horse.y+<span class="number">1</span>&lt;=<span class="number">100</span>)</span><br><span class="line">     map[horse.x+<span class="number">2</span>][horse.y+<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x+<span class="number">1</span>&lt;=<span class="number">100</span>&amp;&amp;horse.y+<span class="number">2</span>&lt;=<span class="number">100</span>)</span><br><span class="line">     map[horse.x+<span class="number">1</span>][horse.y+<span class="number">2</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x<span class="number">-1</span>&gt;=<span class="number">0</span>&amp;&amp;horse.y+<span class="number">2</span>&lt;=<span class="number">100</span>)</span><br><span class="line">     map[horse.x<span class="number">-1</span>][horse.y+<span class="number">2</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x<span class="number">-2</span>&gt;=<span class="number">0</span>&amp;&amp;horse.y+<span class="number">1</span>&lt;=<span class="number">100</span>)</span><br><span class="line">     map[horse.x<span class="number">-2</span>][horse.y+<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x<span class="number">-2</span>&gt;=<span class="number">0</span>&amp;&amp;horse.y<span class="number">-1</span>&gt;=<span class="number">0</span>)</span><br><span class="line">     map[horse.x<span class="number">-2</span>][horse.y<span class="number">-1</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">if</span>(horse.x<span class="number">-1</span>&gt;=<span class="number">0</span>&amp;&amp;horse.y<span class="number">-2</span>&gt;=<span class="number">0</span>)</span><br><span class="line">     map[horse.x<span class="number">-1</span>][horse.y<span class="number">-2</span>]=<span class="number">1</span>;</span><br><span class="line">     <span class="comment">//初始化</span></span><br><span class="line">     </span><br><span class="line">     <span class="built_in">dfs</span>(&#123;<span class="number">0</span>,<span class="number">0</span>&#125;);</span><br><span class="line">     </span><br><span class="line">     cout&lt;&lt;sum&lt;&lt;endl;</span><br><span class="line">     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
+<p>主体为dfs函数</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(spot temp)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++)</span><br><span class="line">         &#123;</span><br><span class="line">             <span class="keyword">if</span>(map[temp.y+a[i].y][temp.x+a[i].x]==<span class="number">1</span>||map[temp.y+a[i].y][temp.x+a[i].x]==<span class="number">2</span>)</span><br><span class="line">             &#123;<span class="keyword">if</span>(map[temp.y+a[i].y][temp.x+a[i].x]==<span class="number">2</span>)</span><br><span class="line">             sum++;</span><br><span class="line">             <span class="keyword">continue</span>;&#125;</span><br><span class="line">             <span class="built_in">dfs</span>(&#123;temp.x+a[i].x,temp.y+a[i].y&#125;);</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>函数形参就是当前的点，<br>之后for遍历所有方向。<br>不同点在<code> dfs(&#123;temp.x+a[i].x,temp.y+a[i].y&#125;);</code>一旦遇到合法的点就进去，而遍历完所有可能方向就会结束函数。</p>
 ]]></content>
       <categories>
         <category>算法</category>
@@ -174,6 +174,15 @@
       </categories>
   </entry>
   <entry>
+    <title>前中后三序遍历二叉树的区别</title>
+    <url>/2021/05/29/%E5%89%8D%E4%B8%AD%E5%90%8E%E4%B8%89%E5%BA%8F%E9%81%8D%E5%8E%86%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>#前中后三序遍历二叉树的区别<br>主要区别在与printf函数的位置</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    TreeNode * left;</span><br><span class="line">    TreeNode * right;</span><br><span class="line">&#125;TreeNode;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pre_order</span><span class="params">(TreeNode * Node)</span><span class="comment">//前序遍历递归算法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(Node == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, Node-&gt;data);<span class="comment">//在前面</span></span><br><span class="line">    <span class="built_in">pre_order</span>(Node-&gt;left);</span><br><span class="line">    <span class="built_in">pre_order</span>(Node-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">middle_order</span><span class="params">(TreeNode *Node)</span><span class="comment">//中序遍历递归算法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(Node == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">middle_order</span>(Node-&gt;left);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, Node-&gt;data);<span class="comment">//在中间</span></span><br><span class="line">    <span class="built_in">middle_order</span>(Node-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">post_order</span><span class="params">(TreeNode *Node)</span><span class="comment">//后序遍历递归算法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(Node == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span>; </span><br><span class="line">    <span class="built_in">post_order</span>(Node-&gt;left);</span><br><span class="line">    <span class="built_in">post_order</span>(Node-&gt;right);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, Node-&gt;data);<span class="comment">//在最后</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+  </entry>
+  <entry>
     <title>fastsort</title>
     <url>/2021/04/06/fastsort/</url>
     <content><![CDATA[<h1 id="快速排序（递归）"><a href="#快速排序（递归）" class="headerlink" title="快速排序（递归）"></a>快速排序（递归）</h1><hr>
@@ -182,15 +191,6 @@
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>sort函数是用来进行分割和递归，change函数是用来执行比较和交换，并返回移动后的left。保证left右边所有数据比他小，左边所有数据比他大。<code>int q=change(left,right);</code>这个语句就是用来分割数组，将左右范围值带入，得到一个最左边元素所应该在的位置的下标。再在此下标的基础上分别进行他左边和右边范围的递归。</p>
 <p>sort语句的递归的进口是左下标小于右下标，出口就是左下标大于等于右下标。</p>
 ]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>前中后三序遍历二叉树的区别</title>
-    <url>/2021/05/29/%E5%89%8D%E4%B8%AD%E5%90%8E%E4%B8%89%E5%BA%8F%E9%81%8D%E5%8E%86%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<p>#前中后三序遍历二叉树的区别<br>主要区别在与printf函数的位置</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    TreeNode * left;</span><br><span class="line">    TreeNode * right;</span><br><span class="line">&#125;TreeNode;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pre_order</span><span class="params">(TreeNode * Node)</span><span class="comment">//前序遍历递归算法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(Node == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, Node-&gt;data);<span class="comment">//在前面</span></span><br><span class="line">    <span class="built_in">pre_order</span>(Node-&gt;left);</span><br><span class="line">    <span class="built_in">pre_order</span>(Node-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">middle_order</span><span class="params">(TreeNode *Node)</span><span class="comment">//中序遍历递归算法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(Node == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">middle_order</span>(Node-&gt;left);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, Node-&gt;data);<span class="comment">//在中间</span></span><br><span class="line">    <span class="built_in">middle_order</span>(Node-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">post_order</span><span class="params">(TreeNode *Node)</span><span class="comment">//后序遍历递归算法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(Node == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span>; </span><br><span class="line">    <span class="built_in">post_order</span>(Node-&gt;left);</span><br><span class="line">    <span class="built_in">post_order</span>(Node-&gt;right);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, Node-&gt;data);<span class="comment">//在最后</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>算法</category>
       </categories>
@@ -241,6 +241,27 @@
       </categories>
   </entry>
   <entry>
+    <title>计网笔记-应用层</title>
+    <url>/2021/04/23/%E8%AE%A1%E7%BD%91%E7%AC%94%E8%AE%B0-%E5%BA%94%E7%94%A8%E5%B1%82/</url>
+    <content><![CDATA[<h1 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h1><hr>
+<h4 id="进程的划分"><a href="#进程的划分" class="headerlink" title="进程的划分"></a>进程的划分</h4><p>发起通讯的进程为客户，会话开始是等待联系的进程是服务器。</p>
+<hr>
+<h4 id="套接字"><a href="#套接字" class="headerlink" title="套接字"></a>套接字</h4><p>同一台主机内应用层到运输层的接口。（应用程序编程的接口）。</p>
+<p>应用通过自己的端口号（port number）定位接收的进程。</p>
+<hr>
+<h2 id="应用层协议"><a href="#应用层协议" class="headerlink" title="应用层协议"></a>应用层协议</h2><p>定义的内容：</p>
+<p>①交换的报文类型，例如请求报文和响应报文。</p>
+<p>②各种报文类型的语法，例如报文中的各个字段及这些字段是如何描述的。</p>
+<p>③字段的语义，字段中的信息的含义。</p>
+<p>④确定一个进程何时及如何发送报文，对报文的响应规则。</p>
+<p>其中对报文响应的规则是由RFC文档定义的（协议的一部分）,公用RFC是由IETF网站公布。但也可以自己定义专用的文档。、、</p>
+<p>注：应用层协议分为公用和私人两种，公司可根据需求自己写自己的RFC文档。</p>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+  </entry>
+  <entry>
     <title>计网笔记-运输层</title>
     <url>/2021/04/25/%E8%AE%A1%E7%BD%91%E7%AC%94%E8%AE%B0-%E8%BF%90%E8%BE%93%E5%B1%82/</url>
     <content><![CDATA[<h1 id="运输层"><a href="#运输层" class="headerlink" title="运输层"></a>运输层</h1><hr>
@@ -261,27 +282,6 @@
 <p>③不可靠但快速，无握手过程。</p>
 <p>④无拥塞机制。</p>
 <p>⑤许多防火墙会阻拦UDP流量。</p>
-]]></content>
-      <categories>
-        <category>计算机网络</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>计网笔记-应用层</title>
-    <url>/2021/04/23/%E8%AE%A1%E7%BD%91%E7%AC%94%E8%AE%B0-%E5%BA%94%E7%94%A8%E5%B1%82/</url>
-    <content><![CDATA[<h1 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h1><hr>
-<h4 id="进程的划分"><a href="#进程的划分" class="headerlink" title="进程的划分"></a>进程的划分</h4><p>发起通讯的进程为客户，会话开始是等待联系的进程是服务器。</p>
-<hr>
-<h4 id="套接字"><a href="#套接字" class="headerlink" title="套接字"></a>套接字</h4><p>同一台主机内应用层到运输层的接口。（应用程序编程的接口）。</p>
-<p>应用通过自己的端口号（port number）定位接收的进程。</p>
-<hr>
-<h2 id="应用层协议"><a href="#应用层协议" class="headerlink" title="应用层协议"></a>应用层协议</h2><p>定义的内容：</p>
-<p>①交换的报文类型，例如请求报文和响应报文。</p>
-<p>②各种报文类型的语法，例如报文中的各个字段及这些字段是如何描述的。</p>
-<p>③字段的语义，字段中的信息的含义。</p>
-<p>④确定一个进程何时及如何发送报文，对报文的响应规则。</p>
-<p>其中对报文响应的规则是由RFC文档定义的（协议的一部分）,公用RFC是由IETF网站公布。但也可以自己定义专用的文档。、、</p>
-<p>注：应用层协议分为公用和私人两种，公司可根据需求自己写自己的RFC文档。</p>
 ]]></content>
       <categories>
         <category>计算机网络</category>
