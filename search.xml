@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>bfs代码分析小结</title>
+    <url>/2021/04/04/bfs%E5%8A%A0%E5%9B%9E%E6%BA%AF/</url>
+    <content><![CDATA[<h1 id="bfs非递归"><a href="#bfs非递归" class="headerlink" title="bfs非递归"></a><strong>bfs非递归</strong></h1><hr>
+<p><em><strong>题目</strong></em></p>
+<p>下图给出了一个迷宫的平面图，其中标记为 1 的为障碍，标记为 0 的为可<br>以通行的地方。</p>
+<p>010000</p>
+<p>000100</p>
+<p>001001</p>
+<p>110000</p>
+<p>迷宫的入口为左上角，出口为右下角，在迷宫中，只能从一个位置走到这<br>个它的上、下、左、右四个方向之一。<br>对于上面的迷宫，从入口开始，可以按DRRURRDDDR 的顺序通过迷宫，<br>一共 10 步。其中 D、U、L、R 分别表示向下、向上、向左、向右走。<br>对于下面这个更复杂的迷宫（30 行 50 列），请找出一种通过迷宫的方式，<br>其使用的步数最少，在步数最少的前提下，请找出字典序最小的一个作为答案。<br>请注意在字典序中D&lt;L&lt;R&lt;U。</p>
+<p><em><strong>代码</strong></em></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;iostream&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;cmath&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;queue&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">int</span> n=<span class="number">30</span>,m=<span class="number">50</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span>  <span class="title">coor</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> x,y;</span><br><span class="line">&#125;;<span class="comment">//坐标</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">POS</span>//<span class="title">pos</span>偏移值</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> x,y;</span><br><span class="line">&#125;pos[<span class="number">4</span>]=&#123;&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">-1</span>&#125;,&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">-1</span>,<span class="number">0</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> par[<span class="number">55</span>][<span class="number">55</span>];<span class="comment">//路径数组储存路径用于打印</span></span><br><span class="line"><span class="keyword">bool</span> vis[<span class="number">55</span>][<span class="number">55</span>];<span class="comment">//判断路障的标记数组</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> dir[<span class="number">4</span>]=&#123;<span class="string">&#x27;D&#x27;</span>,<span class="string">&#x27;L&#x27;</span>,<span class="string">&#x27;R&#x27;</span>,<span class="string">&#x27;U&#x27;</span>&#125;;<span class="comment">//方向数组用于打印</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;<span class="comment">//打印函数从终点回溯</span></span><br><span class="line">	<span class="keyword">if</span>(x==<span class="number">0</span> &amp;&amp; y==<span class="number">0</span>) </span><br><span class="line">	<span class="keyword">return</span>;<span class="comment">//到达起点开始回溯</span></span><br><span class="line">	<span class="built_in">dfs</span>(x-pos[par[x][y]].x,y-pos[par[x][y]].y);<span class="comment">//通过路径数组回溯</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>, dir[par[x][y]]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">()</span></span>&#123;</span><br><span class="line">     coor temp;<span class="comment">//中间坐标变量方便预览下一步</span></span><br><span class="line">	 queue&lt;coor&gt; q;<span class="comment">//创建容器双头可读取后方push的栈</span></span><br><span class="line">	 q.<span class="built_in">push</span>(&#123;<span class="number">0</span>,<span class="number">0</span>&#125;);<span class="comment">//起点</span></span><br><span class="line">	 vis[<span class="number">0</span>][<span class="number">0</span>]=<span class="literal">true</span>;<span class="comment">//起点标记路障</span></span><br><span class="line">	 <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())&#123;</span><br><span class="line">		 coor p=q.<span class="built_in">front</span>();<span class="comment">//现在坐标</span></span><br><span class="line">		 q.<span class="built_in">pop</span>();<span class="comment">//弹出</span></span><br><span class="line">		 <span class="keyword">if</span>(p.x==n&amp;&amp;p.y==m)<span class="comment">//判断终点</span></span><br><span class="line">		 <span class="keyword">return</span>;</span><br><span class="line">		 <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)<span class="comment">//4个方向的以此入栈</span></span><br><span class="line">		 &#123;  </span><br><span class="line">			temp.x=p.x+pos[i].x;<span class="comment">//现在坐标加偏移值</span></span><br><span class="line">			temp.y=p.y+pos[i].y;</span><br><span class="line">			<span class="keyword">if</span>(temp.x&lt;<span class="number">0</span>||temp.x&gt;=n||temp.y&lt;<span class="number">0</span>||temp.y&gt;=m||vis[temp.x][temp.y])</span><br><span class="line">			    <span class="keyword">continue</span>;<span class="comment">//判断下一步的可行性不可行就下一个方向</span></span><br><span class="line">			 vis[temp.x][temp.y]=<span class="literal">true</span>;<span class="comment">//可行此处标记路障</span></span><br><span class="line">			 q.<span class="built_in">push</span>(temp);<span class="comment">//入栈</span></span><br><span class="line">			 par[temp.x][temp.y]=i;<span class="comment">//打印数组记录路径</span></span><br><span class="line">		 &#125;</span><br><span class="line">		 </span><br><span class="line">	 &#125;</span><br><span class="line"></span><br><span class="line">	  </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line"> <span class="keyword">int</span> x;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span>  i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line"> &#123;</span><br><span class="line">	 <span class="keyword">for</span> (<span class="keyword">int</span>  j = <span class="number">0</span>; j &lt; m; j++)</span><br><span class="line">	 &#123;</span><br><span class="line">		 x=<span class="built_in">getchar</span>()-<span class="string">&#x27;0&#x27;</span>;<span class="comment">//读入数据</span></span><br><span class="line">		 <span class="keyword">if</span>(x==<span class="number">1</span>)<span class="comment">//判断是不是障碍</span></span><br><span class="line">		 vis[i][j]=<span class="literal">true</span>;<span class="comment">//路障标记数组标记</span></span><br><span class="line">	 &#125;</span><br><span class="line">	 <span class="built_in">getchar</span>();<span class="comment">//回车清理</span></span><br><span class="line"> &#125;</span><br><span class="line">  <span class="built_in">bfs</span>();</span><br><span class="line">  <span class="built_in">dfs</span>(n<span class="number">-1</span>,m<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a><strong>代码分析</strong></h2><hr>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>代码重要部分分为三大步</p>
+<p>第一步：对整个迷宫进行bfs。</p>
+<p>第二步: 对整个迷宫进行回溯找到路径。</p>
+<hr>
+<h3 id="第一步bfs"><a href="#第一步bfs" class="headerlink" title="第一步bfs"></a>第一步bfs</h3><p>非递归的bfs利用了队列queue，通过对队列的前端进行依次pop来进行依次的遍历，把遍历的结果放入队列的后端。这样就使迷宫进行了分层级（按照步数）相同步数能走到的是一层，次层遍历结束后再进行下一层的遍历。最终找到终点。</p>
+<hr>
+<h2 id="第二步回溯"><a href="#第二步回溯" class="headerlink" title="第二步回溯"></a>第二步回溯</h2><p>回溯的实现是依托标记数组（par）来完成，数组标记了每个格子的来历。<br>也就是通过每个格子上的标记（1，2，3，4）来查找方向<code>char dir[4]=&#123;&#39;D&#39;,&#39;L&#39;,&#39;R&#39;,&#39;U&#39;&#125;;</code>,这样每个格子上的标记就实现了对上一个格子的定位。最后通过终点的格子标记就可以回溯出路线。</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+  </entry>
+  <entry>
     <title>ACM笔记</title>
     <url>/2021/05/08/ACM%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="点与直线"><a href="#点与直线" class="headerlink" title="点与直线"></a>点与直线</h1><hr>
@@ -52,33 +79,6 @@
 
 <hr>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>给的数据正好是bfs队列的顺序只需要一个for循环就可达到队列的效果，再在里面加一个for用于读取每一层的数据，再实时比较即可。</p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>bfs代码分析小结</title>
-    <url>/2021/04/04/bfs%E5%8A%A0%E5%9B%9E%E6%BA%AF/</url>
-    <content><![CDATA[<h1 id="bfs非递归"><a href="#bfs非递归" class="headerlink" title="bfs非递归"></a><strong>bfs非递归</strong></h1><hr>
-<p><em><strong>题目</strong></em></p>
-<p>下图给出了一个迷宫的平面图，其中标记为 1 的为障碍，标记为 0 的为可<br>以通行的地方。</p>
-<p>010000</p>
-<p>000100</p>
-<p>001001</p>
-<p>110000</p>
-<p>迷宫的入口为左上角，出口为右下角，在迷宫中，只能从一个位置走到这<br>个它的上、下、左、右四个方向之一。<br>对于上面的迷宫，从入口开始，可以按DRRURRDDDR 的顺序通过迷宫，<br>一共 10 步。其中 D、U、L、R 分别表示向下、向上、向左、向右走。<br>对于下面这个更复杂的迷宫（30 行 50 列），请找出一种通过迷宫的方式，<br>其使用的步数最少，在步数最少的前提下，请找出字典序最小的一个作为答案。<br>请注意在字典序中D&lt;L&lt;R&lt;U。</p>
-<p><em><strong>代码</strong></em></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;iostream&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;cmath&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;queue&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">int</span> n=<span class="number">30</span>,m=<span class="number">50</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span>  <span class="title">coor</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> x,y;</span><br><span class="line">&#125;;<span class="comment">//坐标</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">POS</span>//<span class="title">pos</span>偏移值</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> x,y;</span><br><span class="line">&#125;pos[<span class="number">4</span>]=&#123;&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">-1</span>&#125;,&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">-1</span>,<span class="number">0</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> par[<span class="number">55</span>][<span class="number">55</span>];<span class="comment">//路径数组储存路径用于打印</span></span><br><span class="line"><span class="keyword">bool</span> vis[<span class="number">55</span>][<span class="number">55</span>];<span class="comment">//判断路障的标记数组</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> dir[<span class="number">4</span>]=&#123;<span class="string">&#x27;D&#x27;</span>,<span class="string">&#x27;L&#x27;</span>,<span class="string">&#x27;R&#x27;</span>,<span class="string">&#x27;U&#x27;</span>&#125;;<span class="comment">//方向数组用于打印</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;<span class="comment">//打印函数从终点回溯</span></span><br><span class="line">	<span class="keyword">if</span>(x==<span class="number">0</span> &amp;&amp; y==<span class="number">0</span>) </span><br><span class="line">	<span class="keyword">return</span>;<span class="comment">//到达起点开始回溯</span></span><br><span class="line">	<span class="built_in">dfs</span>(x-pos[par[x][y]].x,y-pos[par[x][y]].y);<span class="comment">//通过路径数组回溯</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>, dir[par[x][y]]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">()</span></span>&#123;</span><br><span class="line">     coor temp;<span class="comment">//中间坐标变量方便预览下一步</span></span><br><span class="line">	 queue&lt;coor&gt; q;<span class="comment">//创建容器双头可读取后方push的栈</span></span><br><span class="line">	 q.<span class="built_in">push</span>(&#123;<span class="number">0</span>,<span class="number">0</span>&#125;);<span class="comment">//起点</span></span><br><span class="line">	 vis[<span class="number">0</span>][<span class="number">0</span>]=<span class="literal">true</span>;<span class="comment">//起点标记路障</span></span><br><span class="line">	 <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())&#123;</span><br><span class="line">		 coor p=q.<span class="built_in">front</span>();<span class="comment">//现在坐标</span></span><br><span class="line">		 q.<span class="built_in">pop</span>();<span class="comment">//弹出</span></span><br><span class="line">		 <span class="keyword">if</span>(p.x==n&amp;&amp;p.y==m)<span class="comment">//判断终点</span></span><br><span class="line">		 <span class="keyword">return</span>;</span><br><span class="line">		 <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)<span class="comment">//4个方向的以此入栈</span></span><br><span class="line">		 &#123;  </span><br><span class="line">			temp.x=p.x+pos[i].x;<span class="comment">//现在坐标加偏移值</span></span><br><span class="line">			temp.y=p.y+pos[i].y;</span><br><span class="line">			<span class="keyword">if</span>(temp.x&lt;<span class="number">0</span>||temp.x&gt;=n||temp.y&lt;<span class="number">0</span>||temp.y&gt;=m||vis[temp.x][temp.y])</span><br><span class="line">			    <span class="keyword">continue</span>;<span class="comment">//判断下一步的可行性不可行就下一个方向</span></span><br><span class="line">			 vis[temp.x][temp.y]=<span class="literal">true</span>;<span class="comment">//可行此处标记路障</span></span><br><span class="line">			 q.<span class="built_in">push</span>(temp);<span class="comment">//入栈</span></span><br><span class="line">			 par[temp.x][temp.y]=i;<span class="comment">//打印数组记录路径</span></span><br><span class="line">		 &#125;</span><br><span class="line">		 </span><br><span class="line">	 &#125;</span><br><span class="line"></span><br><span class="line">	  </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line"> <span class="keyword">int</span> x;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span>  i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line"> &#123;</span><br><span class="line">	 <span class="keyword">for</span> (<span class="keyword">int</span>  j = <span class="number">0</span>; j &lt; m; j++)</span><br><span class="line">	 &#123;</span><br><span class="line">		 x=<span class="built_in">getchar</span>()-<span class="string">&#x27;0&#x27;</span>;<span class="comment">//读入数据</span></span><br><span class="line">		 <span class="keyword">if</span>(x==<span class="number">1</span>)<span class="comment">//判断是不是障碍</span></span><br><span class="line">		 vis[i][j]=<span class="literal">true</span>;<span class="comment">//路障标记数组标记</span></span><br><span class="line">	 &#125;</span><br><span class="line">	 <span class="built_in">getchar</span>();<span class="comment">//回车清理</span></span><br><span class="line"> &#125;</span><br><span class="line">  <span class="built_in">bfs</span>();</span><br><span class="line">  <span class="built_in">dfs</span>(n<span class="number">-1</span>,m<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a><strong>代码分析</strong></h2><hr>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>代码重要部分分为三大步</p>
-<p>第一步：对整个迷宫进行bfs。</p>
-<p>第二步: 对整个迷宫进行回溯找到路径。</p>
-<hr>
-<h3 id="第一步bfs"><a href="#第一步bfs" class="headerlink" title="第一步bfs"></a>第一步bfs</h3><p>非递归的bfs利用了队列queue，通过对队列的前端进行依次pop来进行依次的遍历，把遍历的结果放入队列的后端。这样就使迷宫进行了分层级（按照步数）相同步数能走到的是一层，次层遍历结束后再进行下一层的遍历。最终找到终点。</p>
-<hr>
-<h2 id="第二步回溯"><a href="#第二步回溯" class="headerlink" title="第二步回溯"></a>第二步回溯</h2><p>回溯的实现是依托标记数组（par）来完成，数组标记了每个格子的来历。<br>也就是通过每个格子上的标记（1，2，3，4）来查找方向<code>char dir[4]=&#123;&#39;D&#39;,&#39;L&#39;,&#39;R&#39;,&#39;U&#39;&#125;;</code>,这样每个格子上的标记就实现了对上一个格子的定位。最后通过终点的格子标记就可以回溯出路线。</p>
 ]]></content>
       <categories>
         <category>算法</category>
@@ -215,6 +215,27 @@
       </categories>
   </entry>
   <entry>
+    <title>计网笔记-应用层</title>
+    <url>/2021/04/23/%E8%AE%A1%E7%BD%91%E7%AC%94%E8%AE%B0-%E5%BA%94%E7%94%A8%E5%B1%82/</url>
+    <content><![CDATA[<h1 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h1><hr>
+<h4 id="进程的划分"><a href="#进程的划分" class="headerlink" title="进程的划分"></a>进程的划分</h4><p>发起通讯的进程为客户，会话开始是等待联系的进程是服务器。</p>
+<hr>
+<h4 id="套接字"><a href="#套接字" class="headerlink" title="套接字"></a>套接字</h4><p>同一台主机内应用层到运输层的接口。（应用程序编程的接口）。</p>
+<p>应用通过自己的端口号（port number）定位接收的进程。</p>
+<hr>
+<h2 id="应用层协议"><a href="#应用层协议" class="headerlink" title="应用层协议"></a>应用层协议</h2><p>定义的内容：</p>
+<p>①交换的报文类型，例如请求报文和响应报文。</p>
+<p>②各种报文类型的语法，例如报文中的各个字段及这些字段是如何描述的。</p>
+<p>③字段的语义，字段中的信息的含义。</p>
+<p>④确定一个进程何时及如何发送报文，对报文的响应规则。</p>
+<p>其中对报文响应的规则是由RFC文档定义的（协议的一部分）,公用RFC是由IETF网站公布。但也可以自己定义专用的文档。、、</p>
+<p>注：应用层协议分为公用和私人两种，公司可根据需求自己写自己的RFC文档。</p>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+  </entry>
+  <entry>
     <title>计网笔记-导论（持续更新）</title>
     <url>/2021/04/23/%E8%AE%A1%E7%BD%91%E7%AC%94%E8%AE%B0-%E5%AF%BC%E8%AE%BA%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/</url>
     <content><![CDATA[<h1 id="导论"><a href="#导论" class="headerlink" title="导论"></a>导论</h1><hr>
@@ -235,27 +256,6 @@
 <p> 传输层是在网络层的基础之上对网络层的加强和细分，从而实现了进程到进程的传输，并使传输变得可靠。</p>
 <p> 应用层是在进程到进程（传输层）的基础上完成报文的交换。</p>
 <hr>
-]]></content>
-      <categories>
-        <category>计算机网络</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>计网笔记-应用层</title>
-    <url>/2021/04/23/%E8%AE%A1%E7%BD%91%E7%AC%94%E8%AE%B0-%E5%BA%94%E7%94%A8%E5%B1%82/</url>
-    <content><![CDATA[<h1 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h1><hr>
-<h4 id="进程的划分"><a href="#进程的划分" class="headerlink" title="进程的划分"></a>进程的划分</h4><p>发起通讯的进程为客户，会话开始是等待联系的进程是服务器。</p>
-<hr>
-<h4 id="套接字"><a href="#套接字" class="headerlink" title="套接字"></a>套接字</h4><p>同一台主机内应用层到运输层的接口。（应用程序编程的接口）。</p>
-<p>应用通过自己的端口号（port number）定位接收的进程。</p>
-<hr>
-<h2 id="应用层协议"><a href="#应用层协议" class="headerlink" title="应用层协议"></a>应用层协议</h2><p>定义的内容：</p>
-<p>①交换的报文类型，例如请求报文和响应报文。</p>
-<p>②各种报文类型的语法，例如报文中的各个字段及这些字段是如何描述的。</p>
-<p>③字段的语义，字段中的信息的含义。</p>
-<p>④确定一个进程何时及如何发送报文，对报文的响应规则。</p>
-<p>其中对报文响应的规则是由RFC文档定义的（协议的一部分）,公用RFC是由IETF网站公布。但也可以自己定义专用的文档。、、</p>
-<p>注：应用层协议分为公用和私人两种，公司可根据需求自己写自己的RFC文档。</p>
 ]]></content>
       <categories>
         <category>计算机网络</category>
