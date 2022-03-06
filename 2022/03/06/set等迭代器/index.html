@@ -20,15 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="日记">
-<meta property="og:url" content="http://example.com/archives/2021/06/index.html">
+  <meta name="description" content="set等迭代器 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647struct l&amp;#123;	int come;	int end;	int ti;	friend bool operator &lt; (const struct l&amp; n1, const struct l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="set等迭代器">
+<meta property="og:url" content="http://example.com/2022/03/06/set%E7%AD%89%E8%BF%AD%E4%BB%A3%E5%99%A8/index.html">
 <meta property="og:site_name" content="日记">
+<meta property="og:description" content="set等迭代器 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647struct l&amp;#123;	int come;	int end;	int ti;	friend bool operator &lt; (const struct l&amp; n1, const struct l">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-06T10:45:53.000Z">
+<meta property="article:modified_time" content="2022-03-06T10:49:45.405Z">
 <meta property="article:author" content="一无是处的萌新">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/archives/2021/06/">
+<link rel="canonical" href="http://example.com/2022/03/06/set%E7%AD%89%E8%BF%AD%E4%BB%A3%E5%99%A8/">
 
 
 <script id="page-configurations">
@@ -36,12 +40,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | 日记</title>
+  <title>set等迭代器 | 日记</title>
   
 
 
@@ -172,50 +176,77 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 27 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/06/set%E7%AD%89%E8%BF%AD%E4%BB%A3%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一无是处的萌新">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          set等迭代器
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-06 18:45:53 / 修改时间：18:49:45" itemprop="dateCreated datePublished" datetime="2022-03-06T18:45:53+08:00">2022-03-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        <h1 id="set等迭代器"><a href="#set等迭代器" class="headerlink" title="set等迭代器"></a>set等迭代器</h1><hr>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">l</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> come;</span><br><span class="line">	<span class="keyword">int</span> end;</span><br><span class="line">	<span class="keyword">int</span> ti;</span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &lt; (<span class="keyword">const</span> struct l&amp; n1, <span class="keyword">const</span> struct l&amp; n2)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> n1.end &lt; n2.end;</span><br><span class="line">	&#125;<span class="comment">//重写&lt;方法否则set比较不了插入的值是否存在</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	set&lt;struct l&gt; s;</span><br><span class="line">	s.<span class="built_in">insert</span>(&#123; <span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span> &#125;);</span><br><span class="line">	set&lt;struct l&gt;::iterator itr;</span><br><span class="line">	<span class="keyword">for</span> (itr = s.<span class="built_in">begin</span>(); itr != s.<span class="built_in">end</span>();)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (itr-&gt;end == map[temp].road[i]) &#123;</span><br><span class="line">				<span class="keyword">if</span> (itr-&gt;ti &gt; map[temp].time[i])</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="comment">//cout &lt;&lt; &quot;dele&quot;;迭代器删除某一项</span></span><br><span class="line">					itr=s.<span class="built_in">erase</span>(itr);</span><br><span class="line">						&#125;</span><br><span class="line">						<span class="keyword">else</span></span><br><span class="line">							itr++;</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="keyword">else</span></span><br><span class="line">						itr++;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">		set&lt;struct l&gt;::iterator itr;<span class="comment">//迭代遍历</span></span><br><span class="line">		<span class="keyword">for</span> (itr = s.<span class="built_in">begin</span>(); itr != s.<span class="built_in">end</span>(); itr++)</span><br><span class="line">		&#123;</span><br><span class="line">			sumt = <span class="built_in">max</span>(itr-&gt;ti, sumt);</span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; sumt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-06-01T07:34:02+08:00"
-              content="2021-06-01">
-          06-01
-        </time>
-      </div>
+      <footer class="post-footer">
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/06/01/TCP%E5%8D%8F%E8%AE%AE/" itemprop="url">
-            <span itemprop="name">TCP协议</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/06/sort%E5%87%BD%E6%95%B0/" rel="prev" title="sort函数">
+      <i class="fa fa-chevron-left"></i> sort函数
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -268,6 +299,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#set%E7%AD%89%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">set等迭代器</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
