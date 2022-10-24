@@ -178,6 +178,89 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/24/Eureka/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一无是处的萌新">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/24/Eureka/" class="post-title-link" itemprop="url">Eureka</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-24 17:21:51 / 修改时间：17:30:49" itemprop="dateCreated datePublished" datetime="2022-10-24T17:21:51+08:00">2022-10-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h1><h2 id="ACP"><a href="#ACP" class="headerlink" title="ACP"></a>ACP</h2><p>A 可用性(Availability)</p>
+<p>C 一致性(Consistency)</p>
+<p>P 分区容错性(Tolerance of network Partition)</p>
+<p>zk 保证cp:</p>
+<p>zk服务宕机会有一段时间选举master 导致整个系统无法使用 所以是cp</p>
+<p>eureka保证 ap:</p>
+<p>eureka是所有服务平等，只要有一个服务存活存活就能保证 整个网络使用 但不保证是最新的。</p>
+<h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8761</span><br><span class="line"></span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: eureka-service01</span><br><span class="line">eureka:</span><br><span class="line">  server:</span><br><span class="line">    eviction-interval-timer-in-ms: 1000 #定期删除操作</span><br><span class="line">    renewal-percent-threshold: 0.85 #续约百分比 超过85%没有续约则不会剔除一个</span><br><span class="line">  instance:</span><br><span class="line">    instance-id: $&#123;eureka.instance.hostname&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span><br><span class="line">    hostname: localhost</span><br><span class="line">    prefer-ip-address: true #显示ip</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.eurekaservice01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"></span><br><span class="line">@EnableEurekaServer  #启动</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EurekaService01Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(EurekaService01Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: eureka-client02</span><br><span class="line"></span><br><span class="line">server:</span><br><span class="line">  port: 8081</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://127.0.0.1:8761/eureka #指定注册的地址</span><br><span class="line">    register-with-eureka: true #可以不往服务器注册</span><br><span class="line">    fetch-registry: true #应用是否拉取服务列表</span><br><span class="line">    registry-fetch-interval-seconds: 10 # 解决服务列表脏读每隔一段时间拉取一次服务列表</span><br><span class="line">  instance:</span><br><span class="line">    hostname: localhost #应用主机名最好写ip</span><br><span class="line">    instance-id: $&#123;eureka.instance.hostname&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span><br><span class="line">    prefer-ip-address: true #显示ip</span><br><span class="line">    lease-renewal-interval-in-seconds: 10 # 续约时间</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.example.eurekaclient02;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.netflix.eureka.EnableEurekaClient;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EurekaClient02Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(EurekaClient02Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件可同个服务启动多次<br><img src="data:image/png;base64,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" alt="avatar"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/29/trie%E6%A0%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -201,10 +284,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-03-29 15:21:59 / 修改时间：15:24:46" itemprop="dateCreated datePublished" datetime="2022-03-29T15:21:59+08:00">2022-03-29</time>
+              <time title="创建时间：2022-03-29 15:21:59" itemprop="dateCreated datePublished" datetime="2022-03-29T15:21:59+08:00">2022-03-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-02 15:30:05" itemprop="dateModified" datetime="2022-04-02T15:30:05+08:00">2022-04-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -226,7 +315,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">c</span>&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">c</span>* <span class="title">children</span>[26] =</span> &#123;<span class="literal">NULL</span>&#125;;<span class="comment">//子节点指针一定要设置成空</span></span><br><span class="line">	<span class="keyword">int</span> v = <span class="number">0</span>;</span><br><span class="line">&#125;root;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ins</span><span class="params">(<span class="keyword">char</span>* s)</span> </span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">c</span>* <span class="title">now</span> =</span> &amp;root;</span><br><span class="line">	<span class="keyword">int</span> slong = <span class="built_in">strlen</span>(s);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; slong; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (now-&gt;children[s[i] - <span class="string">&#x27;a&#x27;</span>]==<span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			now-&gt;children[s[i] - <span class="string">&#x27;a&#x27;</span>] = <span class="keyword">new</span> struct c;是空新建节点</span><br><span class="line">		&#125;</span><br><span class="line">		now = now-&gt;children[s[i] - <span class="string">&#x27;a&#x27;</span>];<span class="comment">//往下走</span></span><br><span class="line">	&#125;</span><br><span class="line">	now-&gt;v = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">find</span><span class="params">(<span class="keyword">char</span> *s)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> slong = <span class="built_in">strlen</span>(s);</span><br><span class="line">	<span class="keyword">int</span> flog = <span class="number">0</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">c</span> *<span class="title">now</span> =</span> &amp;root;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; slong; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (now-&gt;children[s[i] - <span class="string">&#x27;a&#x27;</span>] == <span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;WRONG\n&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		now = now-&gt;children[s[i] - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">	&#125;<span class="comment">//走到最后还没结束判断最后的单词是第几次到或者不匹配</span></span><br><span class="line"></span><br><span class="line">	flog = now-&gt;v;</span><br><span class="line">	<span class="built_in"><span class="keyword">switch</span></span> (flog)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;OK\n&quot;</span>);</span><br><span class="line">		now-&gt;v++;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;REPEAT\n&quot;</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;WRONG\n&quot;</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	<span class="keyword">char</span> s[<span class="number">60</span>];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		cin &gt;&gt; s;</span><br><span class="line">		<span class="built_in">ins</span>(s);</span><br><span class="line">	&#125;<span class="comment">//插入数据</span></span><br><span class="line">	<span class="keyword">int</span> m;</span><br><span class="line">	cin &gt;&gt; m;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)</span><br><span class="line">	&#123; </span><br><span class="line">		cin &gt;&gt; s;</span><br><span class="line">		<span class="built_in">find</span>(s);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <p>tri</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">c</span>&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">c</span>* <span class="title">children</span>[26] =</span> &#123;<span class="literal">NULL</span>&#125;;<span class="comment">//子节点指针一定要设置成空</span></span><br><span class="line">	<span class="keyword">int</span> v = <span class="number">0</span>;</span><br><span class="line">&#125;root;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ins</span><span class="params">(<span class="keyword">char</span>* s)</span> </span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">c</span>* <span class="title">now</span> =</span> &amp;root;</span><br><span class="line">	<span class="keyword">int</span> slong = <span class="built_in">strlen</span>(s);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; slong; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (now-&gt;children[s[i] - <span class="string">&#x27;a&#x27;</span>]==<span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			now-&gt;children[s[i] - <span class="string">&#x27;a&#x27;</span>] = <span class="keyword">new</span> struct c;是空新建节点</span><br><span class="line">		&#125;</span><br><span class="line">		now = now-&gt;children[s[i] - <span class="string">&#x27;a&#x27;</span>];<span class="comment">//往下走</span></span><br><span class="line">	&#125;</span><br><span class="line">	now-&gt;v = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">find</span><span class="params">(<span class="keyword">char</span> *s)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> slong = <span class="built_in">strlen</span>(s);</span><br><span class="line">	<span class="keyword">int</span> flog = <span class="number">0</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">c</span> *<span class="title">now</span> =</span> &amp;root;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; slong; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (now-&gt;children[s[i] - <span class="string">&#x27;a&#x27;</span>] == <span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;WRONG\n&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		now = now-&gt;children[s[i] - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">	&#125;<span class="comment">//走到最后还没结束判断最后的单词是第几次到或者不匹配</span></span><br><span class="line"></span><br><span class="line">	flog = now-&gt;v;</span><br><span class="line">	<span class="built_in"><span class="keyword">switch</span></span> (flog)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;OK\n&quot;</span>);</span><br><span class="line">		now-&gt;v++;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;REPEAT\n&quot;</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;WRONG\n&quot;</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	<span class="keyword">char</span> s[<span class="number">60</span>];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		cin &gt;&gt; s;</span><br><span class="line">		<span class="built_in">ins</span>(s);</span><br><span class="line">	&#125;<span class="comment">//插入数据</span></span><br><span class="line">	<span class="keyword">int</span> m;</span><br><span class="line">	cin &gt;&gt; m;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)</span><br><span class="line">	&#123; </span><br><span class="line">		cin &gt;&gt; s;</span><br><span class="line">		<span class="built_in">find</span>(s);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -949,76 +1039,6 @@ f(x)=f(2T-x)或f(x+T)=f(T-x)
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/22/vue3setup%E5%87%BD%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="一无是处的萌新">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="日记">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/22/vue3setup%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">vue3setup函数</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-02-22 10:36:16 / 修改时间：13:18:08" itemprop="dateCreated datePublished" datetime="2022-02-22T10:36:16+08:00">2022-02-22</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Vue3 setup函数</p>
-<hr>
-<p>setup函数会在beforeCreate之前执行，this为undefined</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span><br><span class="line">    <span class="comment">// beforeCreate()&#123;</span></span><br><span class="line"><span class="comment">//     //setup后执行</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line">      props:[<span class="string">&#x27;msg&#x27;</span>]<span class="comment">//定义父组件传进来的参数</span></span><br><span class="line">     <span class="comment">// emits:[&#x27;hello&#x27;]//没警告可不写,</span></span><br><span class="line">     <span class="comment">//定义父组件绑定的方法用 context.emit(hello,可选参数)</span></span><br><span class="line">      <span class="function"><span class="title">setup</span>(<span class="params">props,context</span>)</span>&#123;<span class="comment">//组件所用的方法，数据等</span></span><br><span class="line">    <span class="keyword">let</span> name=<span class="string">&#x27;123&#x27;</span></span><br><span class="line">    <span class="keyword">let</span> age =<span class="number">12</span><span class="comment">//非响应式数据直接通过函数更改页面不会实时刷新</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">sayhi</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(name+age)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="comment">//返回函数可以暴露属性或者渲染函数给页面直接使用</span></span><br><span class="line">        name,</span><br><span class="line">        age,</span><br><span class="line">        sayhi<span class="comment">//函数可以提供给@click等使用</span></span><br><span class="line">        <span class="comment">// ()=&gt;&#123;</span></span><br><span class="line">        <span class="comment">//     return h(&#x27;h1&#x27;,&#x27;name&#x27;)//渲染函数此标签中的内容将替换页面，需要提前import &#123;h&#125; from &#x27;vue&#x27;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1087,14 +1107,14 @@ f(x)=f(2T-x)或f(x+T)=f(T-x)
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>

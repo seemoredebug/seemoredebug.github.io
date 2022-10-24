@@ -178,6 +178,76 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/22/vue3setup%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一无是处的萌新">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/22/vue3setup%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">vue3setup函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-22 10:36:16 / 修改时间：13:18:08" itemprop="dateCreated datePublished" datetime="2022-02-22T10:36:16+08:00">2022-02-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Vue3 setup函数</p>
+<hr>
+<p>setup函数会在beforeCreate之前执行，this为undefined</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span><br><span class="line">    <span class="comment">// beforeCreate()&#123;</span></span><br><span class="line"><span class="comment">//     //setup后执行</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line">      props:[<span class="string">&#x27;msg&#x27;</span>]<span class="comment">//定义父组件传进来的参数</span></span><br><span class="line">     <span class="comment">// emits:[&#x27;hello&#x27;]//没警告可不写,</span></span><br><span class="line">     <span class="comment">//定义父组件绑定的方法用 context.emit(hello,可选参数)</span></span><br><span class="line">      <span class="function"><span class="title">setup</span>(<span class="params">props,context</span>)</span>&#123;<span class="comment">//组件所用的方法，数据等</span></span><br><span class="line">    <span class="keyword">let</span> name=<span class="string">&#x27;123&#x27;</span></span><br><span class="line">    <span class="keyword">let</span> age =<span class="number">12</span><span class="comment">//非响应式数据直接通过函数更改页面不会实时刷新</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">sayhi</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(name+age)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="comment">//返回函数可以暴露属性或者渲染函数给页面直接使用</span></span><br><span class="line">        name,</span><br><span class="line">        age,</span><br><span class="line">        sayhi<span class="comment">//函数可以提供给@click等使用</span></span><br><span class="line">        <span class="comment">// ()=&gt;&#123;</span></span><br><span class="line">        <span class="comment">//     return h(&#x27;h1&#x27;,&#x27;name&#x27;)//渲染函数此标签中的内容将替换页面，需要提前import &#123;h&#125; from &#x27;vue&#x27;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/22/vue3main-js/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -922,89 +992,6 @@ v- on  事件绑定
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/08/ACM%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="一无是处的萌新">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="日记">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/08/ACM%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">ACM笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-08 15:14:17" itemprop="dateCreated datePublished" datetime="2021-05-08T15:14:17+08:00">2021-05-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-09 08:38:51" itemprop="dateModified" datetime="2021-09-09T08:38:51+08:00">2021-09-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="点与直线"><a href="#点与直线" class="headerlink" title="点与直线"></a>点与直线</h1><hr>
-<h3 id="点积与叉积"><a href="#点积与叉积" class="headerlink" title="点积与叉积"></a>点积与叉积</h3><p>O （x0，y0） A（x1,x2) B(y1,y2)</p>
-<p>xa=x1-x0;</p>
-<p>ya=y1-y0;</p>
-<p>xb=x2-x0;</p>
-<p>yb=y2-y0;</p>
-<p>OA与OB的点积<br>xa<em>xb+ya</em>yb</p>
-<p><strong>点积为零时向量垂直。</strong></p>
-<p>OA与OB的叉积为<br>xa<em>xb-ya</em>yb;</p>
-<p><strong>叉积为0时O A B 共线。</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1073,14 +1060,14 @@ v- on  事件绑定
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>

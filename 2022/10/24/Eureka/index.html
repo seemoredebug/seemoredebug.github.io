@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="EurekaACPA 可用性(Availability) C 一致性(Consistency) P 分区容错性(Tolerance of network Partition) zk 保证cp: zk服务宕机会有一段时间选举master 导致整个系统无法使用 所以是cp eureka保证 ap: eureka是所有服务平等，只要有一个服务存活存活就能保证 整个网络使用 但不保证是最新的。 Servi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Eureka">
+<meta property="og:url" content="http://example.com/2022/10/24/Eureka/index.html">
+<meta property="og:site_name" content="日记">
+<meta property="og:description" content="EurekaACPA 可用性(Availability) C 一致性(Consistency) P 分区容错性(Tolerance of network Partition) zk 保证cp: zk服务宕机会有一段时间选举master 导致整个系统无法使用 所以是cp eureka保证 ap: eureka是所有服务平等，只要有一个服务存活存活就能保证 整个网络使用 但不保证是最新的。 Servi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="data:image/png;base64,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">
+<meta property="article:published_time" content="2022-10-24T09:21:51.000Z">
+<meta property="article:modified_time" content="2022-10-24T09:30:49.697Z">
+<meta property="article:author" content="一无是处的萌新">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/png;base64,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">
+
+<link rel="canonical" href="http://example.com/2022/10/24/Eureka/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Eureka | 日记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">日记</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/24/Eureka/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一无是处的萌新">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Eureka
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-24 17:21:51 / 修改时间：17:30:49" itemprop="dateCreated datePublished" datetime="2022-10-24T17:21:51+08:00">2022-10-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h1><h2 id="ACP"><a href="#ACP" class="headerlink" title="ACP"></a>ACP</h2><p>A 可用性(Availability)</p>
+<p>C 一致性(Consistency)</p>
+<p>P 分区容错性(Tolerance of network Partition)</p>
+<p>zk 保证cp:</p>
+<p>zk服务宕机会有一段时间选举master 导致整个系统无法使用 所以是cp</p>
+<p>eureka保证 ap:</p>
+<p>eureka是所有服务平等，只要有一个服务存活存活就能保证 整个网络使用 但不保证是最新的。</p>
+<h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8761</span><br><span class="line"></span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: eureka-service01</span><br><span class="line">eureka:</span><br><span class="line">  server:</span><br><span class="line">    eviction-interval-timer-in-ms: 1000 #定期删除操作</span><br><span class="line">    renewal-percent-threshold: 0.85 #续约百分比 超过85%没有续约则不会剔除一个</span><br><span class="line">  instance:</span><br><span class="line">    instance-id: $&#123;eureka.instance.hostname&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span><br><span class="line">    hostname: localhost</span><br><span class="line">    prefer-ip-address: true #显示ip</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.eurekaservice01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"></span><br><span class="line">@EnableEurekaServer  #启动</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EurekaService01Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(EurekaService01Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: eureka-client02</span><br><span class="line"></span><br><span class="line">server:</span><br><span class="line">  port: 8081</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://127.0.0.1:8761/eureka #指定注册的地址</span><br><span class="line">    register-with-eureka: true #可以不往服务器注册</span><br><span class="line">    fetch-registry: true #应用是否拉取服务列表</span><br><span class="line">    registry-fetch-interval-seconds: 10 # 解决服务列表脏读每隔一段时间拉取一次服务列表</span><br><span class="line">  instance:</span><br><span class="line">    hostname: localhost #应用主机名最好写ip</span><br><span class="line">    instance-id: $&#123;eureka.instance.hostname&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span><br><span class="line">    prefer-ip-address: true #显示ip</span><br><span class="line">    lease-renewal-interval-in-seconds: 10 # 续约时间</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.example.eurekaclient02;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.netflix.eureka.EnableEurekaClient;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EurekaClient02Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(EurekaClient02Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件可同个服务启动多次<br><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaoAAAA1CAIAAACfqjiDAAAACXBIWXMAABJNAAASTQHzl8SnAAAAEXRFWHRTb2Z0d2FyZQBTbmlwYXN0ZV0Xzt0AAA1/SURBVHic7d15VJNnugDw54myB1DIoqK4VUIFRJ22KosESi0XrSxKz9h7emfmWCpn5sycO52/vI5tnar963Y658w5tdp2tutYBERo64gLa+LGKGDYkiqgoJAdSICw5b1/JMQUEhaLgOT5/SPJ9+b5nu/N9z287/sliDFx8TCRXkOXt6//hM0IIeQ5wpntBAghZHZQ+SOEuCgqf4QQF0XljxDioqj8EUJcFJU/QoiLovJHCHFRVP4IIS6Kyh8hxEVR+SOEuCgqf4QQF7VwthMgrsLd3W3ZEuFsZ0HIE1T+yAzhIMfTw+PBo8eznQghVjT5JYS4KCp/hBAXReWPEOKiqPwRQlwUlT9CiIui8kcIcVFU/gghLoo+90fIvOMTHJUQHREU4MUx6Vvry4uvN/cAADDG4UW8tiv6hQBO1/1rly5UK4cQx2m/ICA0Pu7ldcv8PVifrrVBUnKtyTibhzXtpq38CcWZWTF820MmL/hDTt10BSeEBInj/EtK6y0FyznGuC8l71ynuZL71+Zu5rs2dtfu5L6vzlYZEHHJtrRtHpXnTjWYlsfv2SXW/fVKq9lZ+24Qbk9Y+fhqXnlXP4crEG1LfCNl6B//d1M3UQLPkemc/DK19MRHx44cPf7BR19IAna/fyBOyNg0xif2hOJM6mEXwYDjvXTzthf9Jtecv0SorpEqtKahwX59Q3lVh0DIB2AM10SG9d0urlEPDBiayv6tD9u0biFjztoDDHXplWpdz4B52NTdXl1ao+L6cp/lYc68ZzL55aDqSv41UWZImLBUqXoWeyAuzTNoc2Js5KpArhsO9nZ39Xc25BVUGRAZeAS/nBi/IXixW197g7SoXNHFMHjr3rgXuFx/Temfr/RGJb2+Ochdc/PrryvVIEp/L3kdoq7y9KmqFf+VGbsE7n/3SWH9FONoHI2GGOO9nJIYLtDf/ka1LnnbCi+Ttun2pavVqkEEAMa81sYkJUQu9wXjo9qyC+X3jTBOnj5b3npXvBQBYM3v3tvJ7n33SWHdSPI/3KllU5v8XnxM7Lrmku+7zOjGC+QoFG0AALwVQX1NtwwACAB9D9s6ty4RQmObk/aIujtXdYDIWeDu7b9kXeRydXH5w3k09IMZWPszs7B9v98NBYWQslsEivyjuTJE+5nyqGlyRMbBdBECAFNL8+UhaSLF5ydK2yF8VJAaECZm7Y/lW1t+fqJUiWhmgsSs/SJ5oVy027Kp8fyxMyrxrzKjBIiMyS17H5OhwFEoB2k7yU2YmLVfJP/ys1KV7RDSoPAPOXVTysfWJ/bPR2QcjFF/KeHvt+3XtsdYPgLwsw5HWzrQHL7nSKrI1p+Wh43nj2XXzvXzNe23/z32Mv72f+Whv3N2eS+LSY4cLv/mq/u6fo63P29p6Iu+XAADwKKNu15f1lR09lJHP3dNbHJqVOffJCqN4maFdk3cLr9FkTEr+yrPfF62LJTbC4CoKPyL/7493iUVSmDqkn8LVyku1wPAFOM40X1f1h6euna9SHk99+Q3A4tCE3enxWq/uNo6jOgX+R9JweqLp797ZF62ZeeOnZGq7Bqj8zx7b5359CYLSX9PJP+ksB4REBEU+X9UONgtIsLg90U5IN719i82t7Ro+433v73cPIAIjMv1MT60Ld719PR4830AEJ20t/Z5SMpvkl8YUN6+dKFUYQAqf5Mi4PFBJ1FaH4lSQvOPHs9GBMSIjINpIYpzH52UjVSZ9zPAUgFHNuXKEM3he46k8pn6yXtsH2SpOBbyjx9RWUvegTc1thrKj46Snzp+RIVCcWZW6qEPmTz/6HFLuUx7M1w2ZkVyabzTUI7SdpzbOCaTj1CceUCkOPHRSSWiUJx54Pd7YaQCCmLeWX/+2JEca1+lxzd8Vqoq/vzjOnHmAZHCWqwFcb9KCag4eaxYhebwuEQBu/Jj3ruZlf/HTx08y4EGJ5c3sD6DEVcsWhzgY3jcadA9Nl57DIDIGC9yo1v12TutvQigb6yo2fifIoFEpdK1Nmu9NsFq/66zFx/0AoC8Vm+5jIf0svqun4YsKWvr4AVj062OgaeL4yjNAV1Texf4ycurHgICaO5WyDa/uVZ4tfURW7xxk3/9v841dQFAS3lx/btJGwKrpdqpxGcsxNnorx5xYcCakIWy06fbAjfEiCM2ab9/eEdnBli4YAGC7RUc5AwPDwEAgJP2lgNR5P+p2Wdx0Ibtb6R5FObUdo//bj5fnkn5M7OwfSkhaumXMkRgAABqaYXlYjazsPUhIC+wXtscrDtTEPphSmgEq62B8B9sqs079+LBtIAnYW1BAEBZmqcESwRVnVwTI+IJGWu3bFNcK1YhALTXK1TRPF1BrgyRA6orUkVMSmgEqx01ABwnlNO0x+Q2nonyqYFwcTRITpUqEQGgveSaPHr3+giQ1QIAMHmBZQTHwbpSadQB0YvCEqVy1FVh+2WDwKktKwbkqPKO1ALAvPpdbYHYeSMnTx0WsfG1bTv9BzsUVdIbDZpBBPDz812yNeu9hJGWbEi+CGBk9UX7sKVnVDVBNDUqDL/YtPa6IpirlIwMeaYcZzxs5E0wGnu9eD4AAIv9/TpbNNYNTKPV+61cDKCdSnxEp6M/xrg/2RGmv3Bab0L9rW/bdEk/f33z/X9WdoKht8eH6wPQCQAA3t5evT0GAGftu2w5mAd7tC3Xiha//damZbLSx/NoADid5Q/50VmHoy0/qyRf2CaDAKDTKK1nQUSoCBT5MrsLU9YoT4niCwEEozep1BqwKzFPggCA3TQZAOwHYmq12vqTUqObXObOQo2T9qjcxjFxPhGhocgPffdQrN1zjWNfPg5Zozxld/rhQzE/7Pb5Coe6mmokTTUScPMNDhenZfjmnb6lhW6jsf1q9te3e+2uz4mu1R6FQrN9yx6utjJvYOTdfZo4E+fMC1xkNHQCAHQbjL5+/gB6AADw9/e1Pj8+u5tcnp6efX0mpynxBQGDbSbrg76HbfqkIB5AJ6gedfhuWs29XtUDAN7BK7jt1bpx2jPfDXFr2suqrYubHES3hW5TP/C5bDrLn23hbBpjOmSZBooUhUeO2maOsx/qx3C0LjmFbuRgXfYxy3rfO+9HqyWnTlrGm/MSY6t3ZAS3Se40q4wDwwNGowm5XC8AAI2sDtMTN2vK6h8Zhj14a14J86wqrulERDd3N3Bzc0cYHBOuTyFvj9/ec+PesK3LpxaHMd62tzJeZpX/PFOpHX3yC9dvWauUtfZ4LN/2apip7qwaAFFTc7d/X8IrbUXVHUywMSHMVJNrKTHj5Qn9fabApSs85SqfyJ8sb5bUmMY2sep40Ba4NTFCWSJXD3PXREfy26rbARDNijt1MckJGx4UNQ4Fx7/kV3uxaRgRmOP2AD6CoKDhAEV319BC/6Ub4jZ5NFxsm+KbNcfN+MeeVRo1RNlmdgCWgZWuXgkAGjWE8IVPphkCPg/A0QjfMhY7WzsNC7GTDKWadG5PYWyfPBVObd4HMkFi1n7RemGxah6PAQ29C1a+9Orq+MV+XpyhHl2rrOjKI0QE0NwqvLxFvH3vK4Fe2NPRUFZUpocFkWm/SVqNALDq17/dobn51d+k9kUKsV+uuCcwNJtHnkR8ujgcRyeQskW7IvntpAA0Pm64fL5SZznN9LcvFHN3JP1sq9egvrX28vmqTsYWRKaPFx/gYdUNfWrKO+Gmjsp/Feqdn66IfXcvnnePj3vjZ9u90aR9ICsoqu21rHU+qjh3PXFnRuarnO570u8kjxkgOmuP0FFxtS1xx08T+T5g6myTl+dI24bn0cwXZr78cVRlEkVUWsreCFmu9daHbZVQ2SDXRMWkiessy/nhe9JFyBzO/OzqhVkQlx7NA83TVqJJhnKem3XFMDo2osR6VyRdhEw+hRQc9EkWr3SicXS7RgfRPAGAEsAcvmcf5GbXIgCfzwOdVGkO3/u83PmdKkSNNPvvUoeboLfl5oWWm/aNzXfzP737w9ePelWf7MKlHxEHUXPjzGc3xkRGd3c38BhuK/vHybInga3/GORlefIyu1gT5YkIqqqCk1VjjtkR7O+4fTH7tv0BjRyFtu7S3+tGDtd2CE7aD6juXsi2T2q+nUuz8KU3Wc7HKnFm1uFD6QBgt0rIQdWVE19C1n7LAiKTF5yQBDicinJUZeekIVmphz5IBaaW5ks1aU87Y51kqPFzay8pkIj2px8+lA7A5AXn5CFpU0xDlvMxZBy0RmDy/KO5E68hyCok0fvTDx9Kkxd8eLZCnfU/H6QiWPqzFiF8ihmQacXY0td+nrgKceUv3+i3fFqFzD0YExc/YaNeQ5e3r/8MZDOK5VNvc3Mtfy7nNjd5enisCl5O/9cHmTvm0F98MTNBwoHMBIH1Bpc5fE9aiEZerxz/VTNjLudGCHk6c2v0Z7kPG4qWLwY5/pLGbJnLuT0XaPRH5pq5Vf7IPEblj8w1c2jySwghM4nKHyHERVH5I4S4KPpj92RGeXt6mpl5trMgBIDKH5lh/MBJ/p0cQp45Kn9khpj6+xu/vz/bWRDyBK39EUJcFJU/QoiLovJHCHFRVP4IIS6Kyh8hxEVR+SOEuCgqf4QQF0XljxDioqj8EUJcFJU/QoiL+n9Y678ZDCLTKwAAAABJRU5ErkJggg==" alt="avatar"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/29/trie%E6%A0%91/" rel="prev" title="trie树">
+      <i class="fa fa-chevron-left"></i> trie树
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Eureka"><span class="nav-number">1.</span> <span class="nav-text">Eureka</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ACP"><span class="nav-number">1.1.</span> <span class="nav-text">ACP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service"><span class="nav-number">1.2.</span> <span class="nav-text">Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client"><span class="nav-number">1.3.</span> <span class="nav-text">Client</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">一无是处的萌新</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一无是处的萌新</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
