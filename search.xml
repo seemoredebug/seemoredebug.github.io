@@ -180,6 +180,9 @@
     <url>/2022/03/25/springboot/</url>
     <content><![CDATA[<h1 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h1><h1 id="环境支持"><a href="#环境支持" class="headerlink" title="环境支持"></a>环境支持</h1><p>Java8以上<br>maven3 以上 mvn -v</p>
 <h1 id="https-www-yuque-com-atguigu-springboot"><a href="#https-www-yuque-com-atguigu-springboot" class="headerlink" title="https://www.yuque.com/atguigu/springboot"></a><a href="https://www.yuque.com/atguigu/springboot">https://www.yuque.com/atguigu/springboot</a></h1>]]></content>
+      <tags>
+        <tag>springboot</tag>
+      </tags>
   </entry>
   <entry>
     <title>sort函数</title>
@@ -722,5 +725,14 @@ f(x)=f(2T-x)或f(x+T)=f(T-x)
       <categories>
         <category>Mybatis</category>
       </categories>
+  </entry>
+  <entry>
+    <title>docker</title>
+    <url>/2022/10/26/docker/</url>
+    <content><![CDATA[<p><a href="https://docker.easydoc.net/doc/81170005/cCewZWoN/lTKfePfP">https://docker.easydoc.net/doc/81170005/cCewZWoN/lTKfePfP</a></p>
+]]></content>
+      <tags>
+        <tag>docker</tag>
+      </tags>
   </entry>
 </search>
