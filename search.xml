@@ -735,4 +735,9 @@ f(x)=f(2T-x)或f(x+T)=f(T-x)
         <tag>docker</tag>
       </tags>
   </entry>
+  <entry>
+    <title>反射</title>
+    <url>/2022/10/29/%E5%8F%8D%E5%B0%84/</url>
+    <content><![CDATA[<h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取Class对象</span></span><br><span class="line">Class clazz=Class.forName(<span class="string">&quot;&quot;</span>);</span><br><span class="line">Class clazz=类名.class;</span><br><span class="line">Class clazz=对象名.getClass();</span><br><span class="line"><span class="comment">//获取构造器</span></span><br><span class="line">Constructor ctor =clazz.getDeclaredConstructor();</span><br><span class="line"><span class="comment">// 创建对象</span></span><br><span class="line">Object obj=ctor.newInstance();</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
 </search>
