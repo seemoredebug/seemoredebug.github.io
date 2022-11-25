@@ -178,7 +178,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/04/Redis/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/25/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -192,7 +192,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/11/04/Redis/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2022/11/25/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/" class="post-title-link" itemprop="url">图片上传</a>
         </h2>
 
         <div class="post-meta">
@@ -203,7 +203,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-11-04 16:59:25 / 修改时间：16:44:25" itemprop="dateCreated datePublished" datetime="2022-11-04T16:59:25+08:00">2022-11-04</time>
+              <time title="创建时间：2022-11-25 20:27:20 / 修改时间：20:32:26" itemprop="dateCreated datePublished" datetime="2022-11-25T20:27:20+08:00">2022-11-25</time>
             </span>
 
           
@@ -217,7 +217,78 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><p>基于内存进行存储，支持 key-value 的存储形式，底层是用 C 语言编写的。</p>
+          <h1 id="图片上传"><a href="#图片上传" class="headerlink" title="图片上传"></a>图片上传</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">upload</span><span class="params">(MultipartFile file)</span> </span>&#123;</span><br><span class="line">      <span class="comment">//file校验</span></span><br><span class="line">      <span class="keyword">if</span> (file.isEmpty()) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="string">&quot;图片上传失败&quot;</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//file重命名 (a: 1.png   b:1.png)</span></span><br><span class="line">      String originalFilename = file.getOriginalFilename(); <span class="comment">//原来的图片名</span></span><br><span class="line">      String ext = <span class="string">&quot;.&quot;</span> + originalFilename.split(<span class="string">&quot;\\.&quot;</span>)[<span class="number">1</span>]; <span class="comment">// 1.png</span></span><br><span class="line">      String uuid = UUID.randomUUID().toString().replace(<span class="string">&quot;-&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">      String fileName = uuid + ext;</span><br><span class="line">      <span class="comment">//上传图片</span></span><br><span class="line">      ApplicationHome applicationHome = <span class="keyword">new</span> ApplicationHome(<span class="keyword">this</span>.getClass());</span><br><span class="line">      String pre = applicationHome.getDir().getParentFile().getParentFile().getAbsolutePath() +</span><br><span class="line">              <span class="string">&quot;\\src\\main\\resources\\static\\images\\&quot;</span>; <span class="comment">//    /</span></span><br><span class="line">      String path = pre + fileName;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          file.transferTo(<span class="keyword">new</span> File(path));</span><br><span class="line">          <span class="keyword">return</span> path;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;图片上传失败&quot;</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>阿里OSS</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UploadUtil</span> </span>&#123;</span><br><span class="line">    <span class="comment">//阿里域名</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ALI_DOMAIN = <span class="string">&quot;https://czh0123-text.oss-cn-guangzhou.aliyuncs.com/&quot;</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">uploadImage</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//生成文件名</span></span><br><span class="line">        String originalFilename = file.getOriginalFilename(); <span class="comment">//原来的图片名</span></span><br><span class="line">        String ext = <span class="string">&quot;.&quot;</span> + FilenameUtils.getExtension(originalFilename);</span><br><span class="line">        String uuid = UUID.randomUUID().toString().replace(<span class="string">&quot;-&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        String fileName = uuid + ext;</span><br><span class="line">        <span class="comment">//地域节点</span></span><br><span class="line">        String endpoint = <span class="string">&quot;http://oss-cn-guangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line">        String accessKeyId = <span class="string">&quot;LTAI5tGQUpuc5EwDcJ94GJ1t&quot;</span>;</span><br><span class="line">        String accessKeySecret = <span class="string">&quot;fYy0DdfrrFBwkyfXEB5sgSgY266NrR&quot;</span>;</span><br><span class="line">        <span class="comment">//OSS客户端对象</span></span><br><span class="line">        OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line">        ossClient.putObject(</span><br><span class="line">                <span class="string">&quot;czh0123-text&quot;</span>, <span class="comment">//仓库名</span></span><br><span class="line">                fileName, <span class="comment">//文件名</span></span><br><span class="line">                file.getInputStream()</span><br><span class="line">        );</span><br><span class="line">        ossClient.shutdown();</span><br><span class="line">        <span class="keyword">return</span> ALI_DOMAIN + fileName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/03/Redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一无是处的萌新">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/03/Redis/" class="post-title-link" itemprop="url">Redis</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-11-03 10:00:41" itemprop="dateCreated datePublished" datetime="2022-11-03T10:00:41+08:00">2022-11-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-25 20:33:37" itemprop="dateModified" datetime="2022-11-25T20:33:37+08:00">2022-11-25</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>基于内存进行存储，支持 key-value 的存储形式，底层是用 C 语言编写的。</p>
 <p>基于 key-value 形式的数据字典，结构非常简单，没有数据表的概念，直接用键值对的形式完成数据的管理，Redis 支持 5 种数据类型：</p>
 <ul>
 <li>字符串</li>
@@ -284,6 +355,71 @@
 <p>key 是每一组数据的 ID，hashkey 和 value 是一组完整的 HashMap 数据，通过 key 来区分不同的 HashMap。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HashMap hashMap1 = <span class="keyword">new</span> HashMap();</span><br><span class="line">hashMap1.put(key1,value1);</span><br><span class="line">HashMap hashMap2 = <span class="keyword">new</span> HashMap();</span><br><span class="line">hashMap2.put(key2,value2);</span><br><span class="line">HashMap hashMap3 = <span class="keyword">new</span> HashMap();</span><br><span class="line">hashMap3.put(key3,value3);</span><br><span class="line">HashOperations&lt;String,String,String&gt; hashOperations = redisTemplate.opsForHash();</span><br><span class="line">hashOperations.put(hashMap1,key1,value1);</span><br><span class="line">hashOperations.put(hashMap2,key2,value2);</span><br><span class="line">hashOperations.put(hashMap3,key3,value3);</span><br></pre></td></tr></table></figure>
 
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/03/Nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一无是处的萌新">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="日记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/03/Nginx/" class="post-title-link" itemprop="url">Nginx</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-11-03 10:00:41" itemprop="dateCreated datePublished" datetime="2022-11-03T10:00:41+08:00">2022-11-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-25 20:32:42" itemprop="dateModified" datetime="2022-11-25T20:32:42+08:00">2022-11-25</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p><img src="../img/Nginx/image-20221103100117744.png" alt="image-20221103100117744"></p>
 
       
     </div>
@@ -896,231 +1032,6 @@ f(x)=f(2T-x)或f(x+T)=f(T-x)
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/13/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="一无是处的萌新">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="日记">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/13/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">算法总结</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-13 11:17:55 / 修改时间：11:30:59" itemprop="dateCreated datePublished" datetime="2022-03-13T11:17:55+08:00">2022-03-13</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="算法学习路线"><a href="#算法学习路线" class="headerlink" title="算法学习路线"></a>算法学习路线</h1><hr>
-<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h3><h4 id="顺序表"><a href="#顺序表" class="headerlink" title="顺序表"></a>顺序表</h4><h5 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h5><h5 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h5><pre><code>                KMP
-                字典树
-                AC自动机
-                BM
-                后缀树组
-</code></pre>
-<h4 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h4><pre><code>            单向链表
-            双向链表
-            跳舞链
-            跳跃表
-</code></pre>
-<h4 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h4><pre><code>            单调栈
-</code></pre>
-<h4 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h4><pre><code>            循环队列
-            双向队列
-            单调队列
-</code></pre>
-<h4 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h4><h5 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h5><pre><code>            计数
-            哈希函数
-            滚动哈希
-</code></pre>
-<h4 id="树"><a href="#树" class="headerlink" title="树"></a>树</h4><h5 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h5><h6 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h6><h6 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h6><pre><code>                AVL树
-                线段树
-                红黑树
-                伸展树
-                可持久化线段树
-                主席树(Treap)
-</code></pre>
-<h6 id="霍夫曼树"><a href="#霍夫曼树" class="headerlink" title="霍夫曼树"></a>霍夫曼树</h6><h6 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h6><h5 id="非二叉树"><a href="#非二叉树" class="headerlink" title="非二叉树"></a>非二叉树</h5><pre><code>            字典树
-            B树
-            B+树
-</code></pre>
-<h4 id="图"><a href="#图" class="headerlink" title="图"></a>图</h4><h5 id="搜索算法"><a href="#搜索算法" class="headerlink" title="搜索算法"></a>搜索算法</h5><h6 id="深度优先搜索"><a href="#深度优先搜索" class="headerlink" title="深度优先搜索"></a>深度优先搜索</h6><pre><code>                回溯
-                递归
-                分治
-</code></pre>
-<h6 id="广度优先搜索"><a href="#广度优先搜索" class="headerlink" title="广度优先搜索"></a>广度优先搜索</h6><pre><code>                拓扑排序
-                SPFA
-                Dijkstra + Heap
-</code></pre>
-<h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><h6 id="有向图"><a href="#有向图" class="headerlink" title="有向图"></a>有向图</h6><pre><code>                强连通分量
-</code></pre>
-<h6 id="无向图"><a href="#无向图" class="headerlink" title="无向图"></a>无向图</h6><pre><code>                双连通分量
-</code></pre>
-<h5 id="回路"><a href="#回路" class="headerlink" title="回路"></a>回路</h5><pre><code>            欧拉回路
-            哈米尔顿回路
-</code></pre>
-<h5 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h5><h6 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h6><h5 id="树状数组"><a href="#树状数组" class="headerlink" title="树状数组"></a>树状数组</h5><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><pre><code>        顺序枚举(顺序查找)
-            扫描线
-
-        二分枚举(二分查找)
-</code></pre>
-<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><h4 id="比较排序"><a href="#比较排序" class="headerlink" title="比较排序"></a>比较排序</h4><h5 id="简单排序"><a href="#简单排序" class="headerlink" title="简单排序"></a>简单排序</h5><pre><code>                冒泡排序
-                选择排序
-                插入排序
-</code></pre>
-<h5 id="进阶排序"><a href="#进阶排序" class="headerlink" title="进阶排序"></a>进阶排序</h5><pre><code>                归并排序
-                快速排序
-                希尔排序
-</code></pre>
-<h4 id="非比较排序"><a href="#非比较排序" class="headerlink" title="非比较排序"></a>非比较排序</h4><pre><code>            基数排序
-            计数排序
-            桶排序
-            堆排序
-</code></pre>
-<h3 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h3><pre><code>        滑动窗口
-        快慢指针
-</code></pre>
-<h3 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h3><h3 id="模拟"><a href="#模拟" class="headerlink" title="模拟"></a>模拟</h3><h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><h4 id="递推"><a href="#递推" class="headerlink" title="递推"></a>递推</h4><h4 id="线性DP"><a href="#线性DP" class="headerlink" title="线性DP"></a>线性DP</h4><pre><code>            前缀和
-            前缀最值
-</code></pre>
-<h4 id="记忆化搜索"><a href="#记忆化搜索" class="headerlink" title="记忆化搜索"></a>记忆化搜索</h4><h4 id="博弈DP"><a href="#博弈DP" class="headerlink" title="博弈DP"></a>博弈DP</h4><h4 id="状态压缩DP"><a href="#状态压缩DP" class="headerlink" title="状态压缩DP"></a>状态压缩DP</h4><h4 id="区间DP"><a href="#区间DP" class="headerlink" title="区间DP"></a>区间DP</h4><h4 id="数位DP"><a href="#数位DP" class="headerlink" title="数位DP"></a>数位DP</h4><h4 id="最短路"><a href="#最短路" class="headerlink" title="最短路"></a>最短路</h4><pre><code>            Dijkstra
-            Bellman-Ford
-            Folyed
-</code></pre>
-<h2 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h2><pre><code>    概率与统计
-        随机化
-
-    位运算
-        位或
-        位与
-        异或
-        按位取反
-        左移
-        右移
-
-    几何
-        计算几何
-        解析几何
-
-    组合数学
-        容斥原理
-        鸽巢原理
-
-    数论
-</code></pre>
-<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><pre><code>    设计
-    数据流
-    交互
-    迭代器
-    多线程
-    数据库
-    shell
-    水塘抽样
-    拒绝采样
-    脑筋急转弯
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/06/set%E7%AD%89%E8%BF%AD%E4%BB%A3%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="一无是处的萌新">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="日记">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/06/set%E7%AD%89%E8%BF%AD%E4%BB%A3%E5%99%A8/" class="post-title-link" itemprop="url">set等迭代器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-06 18:45:53 / 修改时间：18:49:45" itemprop="dateCreated datePublished" datetime="2022-03-06T18:45:53+08:00">2022-03-06</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="set等迭代器"><a href="#set等迭代器" class="headerlink" title="set等迭代器"></a>set等迭代器</h1><hr>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">l</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> come;</span><br><span class="line">	<span class="keyword">int</span> end;</span><br><span class="line">	<span class="keyword">int</span> ti;</span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &lt; (<span class="keyword">const</span> struct l&amp; n1, <span class="keyword">const</span> struct l&amp; n2)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> n1.end &lt; n2.end;</span><br><span class="line">	&#125;<span class="comment">//重写&lt;方法否则set比较不了插入的值是否存在</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	set&lt;struct l&gt; s;</span><br><span class="line">	s.<span class="built_in">insert</span>(&#123; <span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span> &#125;);</span><br><span class="line">	set&lt;struct l&gt;::iterator itr;</span><br><span class="line">	<span class="keyword">for</span> (itr = s.<span class="built_in">begin</span>(); itr != s.<span class="built_in">end</span>();)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (itr-&gt;end == map[temp].road[i]) &#123;</span><br><span class="line">				<span class="keyword">if</span> (itr-&gt;ti &gt; map[temp].time[i])</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="comment">//cout &lt;&lt; &quot;dele&quot;;迭代器删除某一项</span></span><br><span class="line">					itr=s.<span class="built_in">erase</span>(itr);</span><br><span class="line">						&#125;</span><br><span class="line">						<span class="keyword">else</span></span><br><span class="line">							itr++;</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="keyword">else</span></span><br><span class="line">						itr++;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">		set&lt;struct l&gt;::iterator itr;<span class="comment">//迭代遍历</span></span><br><span class="line">		<span class="keyword">for</span> (itr = s.<span class="built_in">begin</span>(); itr != s.<span class="built_in">end</span>(); itr++)</span><br><span class="line">		&#123;</span><br><span class="line">			sumt = <span class="built_in">max</span>(itr-&gt;ti, sumt);</span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; sumt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1189,7 +1100,7 @@ f(x)=f(2T-x)或f(x+T)=f(T-x)
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1202,7 +1113,7 @@ f(x)=f(2T-x)或f(x+T)=f(T-x)
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

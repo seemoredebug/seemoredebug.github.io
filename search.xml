@@ -784,9 +784,9 @@ f(x)=f(2T-x)或f(x+T)=f(T-x)
     <content><![CDATA[<h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取Class对象</span></span><br><span class="line">Class clazz=Class.forName(<span class="string">&quot;&quot;</span>);</span><br><span class="line">Class clazz=类名.class;</span><br><span class="line">Class clazz=对象名.getClass();</span><br><span class="line"><span class="comment">//获取构造器</span></span><br><span class="line">Constructor ctor =clazz.getDeclaredConstructor();</span><br><span class="line"><span class="comment">// 创建对象</span></span><br><span class="line">Object obj=ctor.newInstance();</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2022/11/04/Redis/</url>
-    <content><![CDATA[<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><p>基于内存进行存储，支持 key-value 的存储形式，底层是用 C 语言编写的。</p>
+    <title>Redis</title>
+    <url>/2022/11/03/Redis/</url>
+    <content><![CDATA[<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>基于内存进行存储，支持 key-value 的存储形式，底层是用 C 语言编写的。</p>
 <p>基于 key-value 形式的数据字典，结构非常简单，没有数据表的概念，直接用键值对的形式完成数据的管理，Redis 支持 5 种数据类型：</p>
 <ul>
 <li>字符串</li>
@@ -854,5 +854,32 @@ f(x)=f(2T-x)或f(x+T)=f(T-x)
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">HashMap hashMap1 = <span class="keyword">new</span> HashMap();</span><br><span class="line">hashMap1.put(key1,value1);</span><br><span class="line">HashMap hashMap2 = <span class="keyword">new</span> HashMap();</span><br><span class="line">hashMap2.put(key2,value2);</span><br><span class="line">HashMap hashMap3 = <span class="keyword">new</span> HashMap();</span><br><span class="line">hashMap3.put(key3,value3);</span><br><span class="line">HashOperations&lt;String,String,String&gt; hashOperations = redisTemplate.opsForHash();</span><br><span class="line">hashOperations.put(hashMap1,key1,value1);</span><br><span class="line">hashOperations.put(hashMap2,key2,value2);</span><br><span class="line">hashOperations.put(hashMap3,key3,value3);</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nginx</title>
+    <url>/2022/11/03/Nginx/</url>
+    <content><![CDATA[<h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p><img src="../img/Nginx/image-20221103100117744.png" alt="image-20221103100117744"></p>
+]]></content>
+      <tags>
+        <tag>Nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>图片上传</title>
+    <url>/2022/11/25/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/</url>
+    <content><![CDATA[<h1 id="图片上传"><a href="#图片上传" class="headerlink" title="图片上传"></a>图片上传</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">upload</span><span class="params">(MultipartFile file)</span> </span>&#123;</span><br><span class="line">      <span class="comment">//file校验</span></span><br><span class="line">      <span class="keyword">if</span> (file.isEmpty()) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="string">&quot;图片上传失败&quot;</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//file重命名 (a: 1.png   b:1.png)</span></span><br><span class="line">      String originalFilename = file.getOriginalFilename(); <span class="comment">//原来的图片名</span></span><br><span class="line">      String ext = <span class="string">&quot;.&quot;</span> + originalFilename.split(<span class="string">&quot;\\.&quot;</span>)[<span class="number">1</span>]; <span class="comment">// 1.png</span></span><br><span class="line">      String uuid = UUID.randomUUID().toString().replace(<span class="string">&quot;-&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">      String fileName = uuid + ext;</span><br><span class="line">      <span class="comment">//上传图片</span></span><br><span class="line">      ApplicationHome applicationHome = <span class="keyword">new</span> ApplicationHome(<span class="keyword">this</span>.getClass());</span><br><span class="line">      String pre = applicationHome.getDir().getParentFile().getParentFile().getAbsolutePath() +</span><br><span class="line">              <span class="string">&quot;\\src\\main\\resources\\static\\images\\&quot;</span>; <span class="comment">//    /</span></span><br><span class="line">      String path = pre + fileName;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          file.transferTo(<span class="keyword">new</span> File(path));</span><br><span class="line">          <span class="keyword">return</span> path;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;图片上传失败&quot;</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>阿里OSS</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UploadUtil</span> </span>&#123;</span><br><span class="line">    <span class="comment">//阿里域名</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ALI_DOMAIN = <span class="string">&quot;https://czh0123-text.oss-cn-guangzhou.aliyuncs.com/&quot;</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">uploadImage</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//生成文件名</span></span><br><span class="line">        String originalFilename = file.getOriginalFilename(); <span class="comment">//原来的图片名</span></span><br><span class="line">        String ext = <span class="string">&quot;.&quot;</span> + FilenameUtils.getExtension(originalFilename);</span><br><span class="line">        String uuid = UUID.randomUUID().toString().replace(<span class="string">&quot;-&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        String fileName = uuid + ext;</span><br><span class="line">        <span class="comment">//地域节点</span></span><br><span class="line">        String endpoint = <span class="string">&quot;http://oss-cn-guangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line">        String accessKeyId = <span class="string">&quot;LTAI5tGQUpuc5EwDcJ94GJ1t&quot;</span>;</span><br><span class="line">        String accessKeySecret = <span class="string">&quot;fYy0DdfrrFBwkyfXEB5sgSgY266NrR&quot;</span>;</span><br><span class="line">        <span class="comment">//OSS客户端对象</span></span><br><span class="line">        OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line">        ossClient.putObject(</span><br><span class="line">                <span class="string">&quot;czh0123-text&quot;</span>, <span class="comment">//仓库名</span></span><br><span class="line">                fileName, <span class="comment">//文件名</span></span><br><span class="line">                file.getInputStream()</span><br><span class="line">        );</span><br><span class="line">        ossClient.shutdown();</span><br><span class="line">        <span class="keyword">return</span> ALI_DOMAIN + fileName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
   </entry>
 </search>
