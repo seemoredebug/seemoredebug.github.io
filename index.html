@@ -201,10 +201,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-11-25 20:27:20 / 修改时间：20:32:26" itemprop="dateCreated datePublished" datetime="2022-11-25T20:27:20+08:00">2022-11-25</time>
+              <time title="创建时间：2022-11-25 20:27:20" itemprop="dateCreated datePublished" datetime="2022-11-25T20:27:20+08:00">2022-11-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-01-08 15:11:21" itemprop="dateModified" datetime="2023-01-08T15:11:21+08:00">2023-01-08</time>
+              </span>
 
           
 
@@ -224,6 +230,9 @@
 <p>阿里OSS</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UploadUtil</span> </span>&#123;</span><br><span class="line">    <span class="comment">//阿里域名</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ALI_DOMAIN = <span class="string">&quot;https://czh0123-text.oss-cn-guangzhou.aliyuncs.com/&quot;</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">uploadImage</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//生成文件名</span></span><br><span class="line">        String originalFilename = file.getOriginalFilename(); <span class="comment">//原来的图片名</span></span><br><span class="line">        String ext = <span class="string">&quot;.&quot;</span> + FilenameUtils.getExtension(originalFilename);</span><br><span class="line">        String uuid = UUID.randomUUID().toString().replace(<span class="string">&quot;-&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        String fileName = uuid + ext;</span><br><span class="line">        <span class="comment">//地域节点</span></span><br><span class="line">        String endpoint = <span class="string">&quot;http://oss-cn-guangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line">        String accessKeyId = <span class="string">&quot;LTAI5tGQUpuc5EwDcJ94GJ1t&quot;</span>;</span><br><span class="line">        String accessKeySecret = <span class="string">&quot;fYy0DdfrrFBwkyfXEB5sgSgY266NrR&quot;</span>;</span><br><span class="line">        <span class="comment">//OSS客户端对象</span></span><br><span class="line">        OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line">        ossClient.putObject(</span><br><span class="line">                <span class="string">&quot;czh0123-text&quot;</span>, <span class="comment">//仓库名</span></span><br><span class="line">                fileName, <span class="comment">//文件名</span></span><br><span class="line">                file.getInputStream()</span><br><span class="line">        );</span><br><span class="line">        ossClient.shutdown();</span><br><span class="line">        <span class="keyword">return</span> ALI_DOMAIN + fileName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.aliyun.oss<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aliyun-sdk-oss<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>3.16.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1133,7 +1142,7 @@ f(x)=f(2T-x)或f(x+T)=f(T-x)
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
